@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import NavBar from './components/NavBar'
+import LeftBar from './components/LeftBar'
+import PostFeed from './components/PostFeed'
+import { Box, Stack } from '@mui/material'
+import RightBar from './components/RightBar'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Box>
+        <NavBar />
+        <Stack
+          direction="row"
+          spacing={2}
+          jusiftyContent="spacebetween"
+          sx={{
+            margin: {
+              xs: '0',
+              sm: ' 0 50px 0 50px',
+              xl: ' 0 200px 0 200px'
+            }
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          <LeftBar />
+          <PostFeed />
+          <RightBar />
+        </Stack>
+      </Box>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
