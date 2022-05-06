@@ -10,7 +10,7 @@ const LeftBar = () => {
           <Box position="fixed">
           <List>
     <ListItem disablePadding>
-      <ListItemButton component="a" href="home">
+      <ListItemButton >
         <ListItemIcon>
           <Home/>
         </ListItemIcon>
@@ -18,7 +18,7 @@ const LeftBar = () => {
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton component="a" href="pages">
+      <ListItemButton >
         <ListItemIcon>
           <Article/>
         </ListItemIcon>
@@ -26,7 +26,7 @@ const LeftBar = () => {
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton component="a" href="groups">
+      <ListItemButton >
         <ListItemIcon>
           <Groups/>
         </ListItemIcon>
@@ -34,7 +34,7 @@ const LeftBar = () => {
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton component="a" href="marketplace">
+      <ListItemButton >
         <ListItemIcon>
           <Storefront/>
         </ListItemIcon>
@@ -42,7 +42,7 @@ const LeftBar = () => {
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton component="a" href="marketplace">
+      <ListItemButton >
         <ListItemIcon>
           <AccountBox/>
         </ListItemIcon>
@@ -50,7 +50,7 @@ const LeftBar = () => {
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton component="a" href="marketplace">
+      <ListItemButton >
         <ListItemIcon>
           <Settings />
         </ListItemIcon>
@@ -58,7 +58,7 @@ const LeftBar = () => {
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton component="a" href="marketplace">
+      <ListItemButton >
         <ListItemIcon>
           < DarkMode/>
         </ListItemIcon>

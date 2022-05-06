@@ -2,16 +2,17 @@ import { Favorite, FavoriteBorder, MoreVert, Share } from '@mui/icons-material'
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, IconButton, Typography } from '@mui/material'
 
 const Post = (props) => {
+  
   return(
     <div>
 
       <Card sx={{margin: "5px"}}>
 
         <CardHeader
-          avatar={<Avatar  aria-label="recipe">{props.iconLetter}</Avatar>}
+          avatar={<Avatar  aria-label="recipe"></Avatar>}
           action={<IconButton aria-label="settings"><MoreVert/></IconButton>}
-          title="User Name"
-          subheader={Date()}
+          title={props.posts.user[0].userName}
+          subheader={props.posts.createdAt}
         />
 
       {/* <CardMedia
@@ -23,7 +24,7 @@ const Post = (props) => {
 
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            post description
+            {props.posts.content}
           </Typography>
         </CardContent>
 

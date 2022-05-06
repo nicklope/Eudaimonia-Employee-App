@@ -3,13 +3,14 @@ const middleware = require('../middleware')
 
 const Login = async (req, res) => {
   try {
-    const user = await User.find({ userName: req.body.userName })
+    const user = await User.findOne({ userName: req.body.userName })
+    console.log('User:' + user.passwordDigest)
     if (
       user &&
       (await middleware.comparePassword(user.passwordDigest, req.body.password))
     ) {
       let payload = {
-        id: user.id,
+        id: user._id,
         userName: user.userName
       }
       let token = middleware.createToken(payload)
@@ -53,8 +54,13 @@ const Register = async (req, res) => {
 //     throw error
 //   }
 // }
+const CheckSession = async (req, res) => {
+  const { payload } = res.locals
+  res.send(payload)
+}
 
 module.exports = {
   Register,
-  Login
+  Login,
+  CheckSession
 }

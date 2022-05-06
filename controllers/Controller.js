@@ -10,15 +10,23 @@ const createPost = async (req, res) => {
     const post = await new Post(req.body)
     user.posts.push(post._id)
 
-    await post.save()
     await post.user.push(user._id)
+    await post.save()
     await user.save()
     res.send(post)
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
 }
+const getPosts = async (req, res) => {
+  try {
+    const posts = await Post.find().populate('user')
 
+    console.log(posts.data)
+    res.send(posts)
+  } catch (error) {}
+}
 module.exports = {
-  createPost
+  createPost,
+  getPosts
 }

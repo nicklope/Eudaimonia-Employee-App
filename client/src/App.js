@@ -1,32 +1,57 @@
 import './App.css'
-import NavBar from './components/NavBar'
-import LeftBar from './components/LeftBar'
-import PostFeed from './components/PostFeed'
-import { Box, Stack } from '@mui/material'
-import RightBar from './components/RightBar'
+import { Route, Routes } from 'react-router-dom'
+import Login from './pages/Login'
+import Home from './pages/Home'
+import { useState, useEffect } from 'react'
+import { CheckSession } from './services/Auth'
 
 function App() {
+  const [authenticated, toggleAuthenticated] = useState(false)
+  const [user, setUser] = useState(null)
+  const handleLogOut = () => {
+    //Reset all auth related state and clear localStorage
+    setUser(null)
+    toggleAuthenticated(false)
+    localStorage.clear()
+  }
+
+  const checkToken = async () => {
+    //If a token exists, sends token to localStorage to persist logged in user
+    const user = await CheckSession()
+    setUser(user)
+    toggleAuthenticated(true)
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    // Check if token exists before requesting to validate the token
+    if (token) {
+      checkToken()
+    }
+  }, [])
   return (
     <div className="App">
-      <Box>
-        <NavBar />
-        <Stack
-          direction="row"
-          spacing={2}
-          jusiftyContent="spacebetween"
-          sx={{
-            margin: {
-              xs: '0',
-              sm: ' 0 50px 0 50px',
-              xl: ' 0 300px 0 300px'
-            }
-          }}
-        >
-          <LeftBar />
-          <PostFeed />
-          <RightBar />
-        </Stack>
-      </Box>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              user={user}
+              authenticated={authenticated}
+              handleLogOut={handleLogOut}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Login
+              setUser={setUser}
+              toggleAuthenticated={toggleAuthenticated}
+            />
+          }
+        />
+      </Routes>
     </div>
   )
 }
