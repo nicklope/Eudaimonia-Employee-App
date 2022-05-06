@@ -1,34 +1,32 @@
 const User = require('../models/User')
 const middleware = require('../middleware')
 
-// const Login = async (req, res) => {
-//   try {
-//     const user = await User.findOne({
-//       where: { email: req.body.email },
-//       raw: true
-//     })
-//     if (
-//       user &&
-//       (await middleware.comparePassword(user.passwordDigest, req.body.password))
-//     ) {
-//       let payload = {
-//         id: user.id,
-//         email: user.email
-//       }
-//       let token = middleware.createToken(payload)
-//       return res.send({ user: payload, token })
-//     }
-//     res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
-//   } catch (error) {
-//     throw error
-//   }
-// }
+const Login = async (req, res) => {
+  try {
+    const user = await User.find({ userName: req.body.userName })
+    if (
+      user &&
+      (await middleware.comparePassword(user.passwordDigest, req.body.password))
+    ) {
+      let payload = {
+        id: user.id,
+        userName: user.userName
+      }
+      let token = middleware.createToken(payload)
+      return res.send({ user: payload, token })
+    }
+    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+  } catch (error) {
+    throw error
+  }
+}
 
 const Register = async (req, res) => {
   try {
-    const { email, password, name } = req.body
+    const { email, password, name, userName } = req.body
     let passwordDigest = await middleware.hashPassword(password)
-    const user = await new User({ email, passwordDigest, name })
+    const user = await new User({ email, passwordDigest, name, userName })
+    user.save()
     res.send(user)
   } catch (error) {
     throw error
@@ -57,5 +55,6 @@ const Register = async (req, res) => {
 // }
 
 module.exports = {
-  Register
+  Register,
+  Login
 }

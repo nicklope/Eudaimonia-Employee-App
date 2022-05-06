@@ -18,7 +18,7 @@ function App() {
             margin: {
               xs: '0',
               sm: ' 0 50px 0 50px',
-              xl: ' 0 200px 0 200px'
+              xl: ' 0 300px 0 300px'
             }
           }}
         >

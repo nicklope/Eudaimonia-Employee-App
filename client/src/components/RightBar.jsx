@@ -48,7 +48,7 @@ const RightBar = () => {
             </ListItemAvatar>
 
           <ListItemText
-                primary="Brunch this weekend?"
+                primary="Word on the street.."
                 secondary={ <React.Fragment>
                               <Typography
                               sx={{ display: 'inline' }}
@@ -56,9 +56,9 @@ const RightBar = () => {
                               variant="body2"
                               color="text.primary"
                               >
-                                Ali Connors
+                                Solaire
                               </Typography>
-                              {" — I'll be in your neighborhood doing errands this…"}
+                              {" — I heard you liked secrets..."}
                             </React.Fragment>}/>
 
           </ListItem>
@@ -72,7 +72,7 @@ const RightBar = () => {
             </ListItemAvatar>
 
           <ListItemText
-                primary="Brunch this weekend?"
+                primary="Hmmm... hmmm..."
                 secondary={ <React.Fragment>
                               <Typography
                               sx={{ display: 'inline' }}
@@ -80,9 +80,9 @@ const RightBar = () => {
                               variant="body2"
                               color="text.primary"
                               >
-                                Ali Connors
+                                Siegland
                               </Typography>
-                              {" — I'll be in your neighborhood doing errands this…"}
+                              {" — How nice it is to see people so patie..."}
                             </React.Fragment>}/>
 
           </ListItem>
@@ -96,7 +96,7 @@ const RightBar = () => {
           </ListItemAvatar>
 
           <ListItemText
-              primary="Brunch this weekend?"
+              primary="Full moon?"
               secondary={ <React.Fragment>
                             <Typography
                             sx={{ display: 'inline' }}
@@ -104,9 +104,9 @@ const RightBar = () => {
                             variant="body2"
                             color="text.primary"
                             >
-                              Ali Connors
+                              Eileen
                             </Typography>
-                            {" — I'll be in your neighborhood doing errands this…"}
+                            {" — Leave the hoontin of hoonters to..."}
                           </React.Fragment>}/>
 
           </ListItem>
