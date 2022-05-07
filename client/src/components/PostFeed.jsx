@@ -5,7 +5,7 @@ import axios from "axios"
 
 
 
-const PostFeed = () => {
+const PostFeed = (props) => {
 
   const [posts, setPosts] = useState()
   const getPosts = async () => {
@@ -32,7 +32,10 @@ if (!posts){
       
       <Post 
       key={post._id}
-      posts={post}/>
+      posts={post}
+      user={props.user}
+      />
+      
       
       )}
     </Box>

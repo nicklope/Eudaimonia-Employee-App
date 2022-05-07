@@ -1,8 +1,43 @@
-import { Favorite, FavoriteBorder, MoreVert, Share } from '@mui/icons-material'
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, IconButton, Typography } from '@mui/material'
+import { ExpandMore, Favorite, FavoriteBorder, MoreVert, Share, Comment, ArrowCircleRight } from '@mui/icons-material'
+import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, IconButton, LinearProgress, TextField, Typography } from '@mui/material'
+import { Box } from '@mui/system';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Post = (props) => {
+  const [comments, setComments] = useState([])
+  const [expanded, setExpanded] = useState(false);
+  const [values, setValues] = useState({
+    content: ''
+  })
+  const getComments = async () => {
+    let res = await axios.get(`http://localhost:3001/eea/comments/${props.posts._id}`)
+    console.log(res)
+    setComments(res.data)
+  }
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value })
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    await axios.post(`http://localhost:3001/eea/comment/${props.user._id}/${props.posts._id}`, values)
+    setValues({ content: ""})
+  }
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+  useEffect(()=>{
+    getComments()
+  },[])
+  if(!comments){
+    return (
+      <Box flex={4} p={10} >
+        
+        <LinearProgress color="inherit" mt="20px"/>
   
+      </Box>
+    )
+  } else
   return(
     <div>
 
@@ -35,8 +70,46 @@ const Post = (props) => {
           <IconButton aria-label="share">
             <Share />
           </IconButton>
+          <IconButton
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <Comment/>
+          </IconButton>
         </CardActions>
 
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Box
+          component="form"
+          sx={{
+              display: "flex",
+              m: 1,
+              width: '100%',
+              justifyContent: "space-around",
+              alignItems: "center"
+
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <Avatar/>
+          <TextField
+            id="outlined-basic"
+            label="Comment"
+            variant="outlined"
+            sx={{m:1, width: "70%" }}
+            onChange={handleChange('content')}
+          />
+          <IconButton onClick={handleSubmit}>
+            <ArrowCircleRight sx={{fontSize: '50px'}}/>
+          </IconButton>
+          </Box>
+        <CardContent>
+         
+        </CardContent>
+      </Collapse>
     </Card>
 
     </div>

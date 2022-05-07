@@ -10,7 +10,7 @@ const Home = (props) => {
   return props.user && props.authenticated ? (
     <div className="App">
       <Box>
-        <NavBar />
+        <NavBar handleLogOut={props.handleLogOut} />
         <Stack
           direction="row"
           spacing={2}
@@ -24,7 +24,7 @@ const Home = (props) => {
           }}
         >
           <LeftBar />
-          <PostFeed />
+          <PostFeed user={props.user} />
           <RightBar />
         </Stack>
       </Box>

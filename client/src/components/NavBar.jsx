@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, styled, Typography, Box,  Badge, Avatar, Menu, MenuItem, IconButton } from '@mui/material'
-import { GroupWork, Login }from '@mui/icons-material'
+import { GroupWork, Login, Logout }from '@mui/icons-material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,6 +16,9 @@ const EudaimoniaIcon = styled(GroupWork)({
 const LoginIcon = styled(Login)({
   fontSize: 60,
 })
+const LogoutIcon = styled(Logout)({
+  fontSize: 60,
+})
 const IconBox = styled(Box) (({theme})=>({
   display: "flex",
   gap: "10px",
@@ -24,9 +27,10 @@ const IconBox = styled(Box) (({theme})=>({
  
 
 
-const NavBar = () => {
+const NavBar = (props) => {
 
   const [loginColor, setLoginColor] = useState("inherit")
+  const [logoutColor, setLogoutColor] = useState("inherit")
   const [homeColor, setHomeColor] = useState("inherit")
   const navigate = useNavigate()
   return(
@@ -36,6 +40,9 @@ const NavBar = () => {
         <IconBox>
           <IconButton color={loginColor} onMouseOver={()=> setLoginColor("success")} onMouseLeave={() => setLoginColor("inherit")} onClick={() => navigate('/login')}>
             <LoginIcon />
+          </IconButton>
+          <IconButton color={logoutColor} onMouseOver={()=> setLogoutColor("success")} onMouseLeave={() => setLogoutColor("inherit")} onClick={props.handleLogOut}>
+            <LogoutIcon />
           </IconButton>
           <IconButton color={homeColor} onMouseOver={()=> setHomeColor("success")} onMouseLeave={() => setHomeColor("inherit")} onClick={() => navigate('/')}>
           <EudaimoniaIcon />
