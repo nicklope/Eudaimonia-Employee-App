@@ -18,9 +18,11 @@ const Post = (props) => {
     console.log(res)
     setComments(res.data)
   }
-  const deleteComment = async (id) => {
+  const deleteComment = async (id, commenter) => {
+    if(props.user.id === commenter){
     await axios.delete(`http://localhost:3001/eea/comment/${id}`)
     setRefresh(true)
+  } else console.log("Thats not your comment!")
   }
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value })
@@ -125,7 +127,7 @@ const Post = (props) => {
               <div>
               <h1>{comment.user[0].userName}</h1>
               <p>{comment.content}</p>
-              <IconButton onClick={()=> deleteComment(comment._id)}>
+              <IconButton onClick={()=> deleteComment(comment._id, comment.user[0]._id)}>
                 <Delete/>
               </IconButton>
               </div>
