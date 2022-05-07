@@ -1,5 +1,5 @@
 import { ExpandMore, Favorite, FavoriteBorder, MoreVert, Share, Comment, ArrowCircleRight, Delete } from '@mui/icons-material'
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, IconButton, LinearProgress, TextField, Typography } from '@mui/material'
+import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, IconButton, LinearProgress, Stack, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -72,7 +72,7 @@ const Post = (props) => {
       /> */}
 
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body4" color="text.secondary">
             {props.posts.content}
           </Typography>
         </CardContent>
@@ -115,6 +115,7 @@ const Post = (props) => {
             variant="outlined"
             sx={{m:1, width: "70%" }}
             onChange={handleChange('content')}
+            value={values.content}
           />
           <IconButton onClick={handleSubmit}>
             <ArrowCircleRight sx={{fontSize: '50px'}}/>
@@ -123,14 +124,19 @@ const Post = (props) => {
         <CardContent>
          {comments[0] ? 
           
-            comments.map((comment)=>(
-              <div>
-              <h1>{comment.user[0].userName}</h1>
-              <p>{comment.content}</p>
+            comments.slice(0)
+                    .reverse()
+                    .map((comment)=>(
+              <Box m={1} display="flex" justifyContent="space-around">
+                <Avatar/>
+              <Typography m={1} variant="h6">{comment.user[0].userName}</Typography>
+              <Stack  direction="row" spacing={2} m={2} justifyContent="space-between" alignItems="center" backgroundColor="#f5f5f5" width="70%">
+              <Typography variant="body2" color="text.secondary" m={1}>{comment.content}</Typography>
               <IconButton onClick={()=> deleteComment(comment._id, comment.user[0]._id)}>
                 <Delete/>
               </IconButton>
-              </div>
+              </Stack>
+              </Box>
             ))
           
            : ""}

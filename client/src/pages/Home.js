@@ -3,8 +3,9 @@ import NavBar from '../components/NavBar'
 import LeftBar from '../components/LeftBar'
 import PostFeed from '../components/PostFeed'
 
-import { Box, Stack } from '@mui/material'
+import { Box, Fab, Stack, Tooltip } from '@mui/material'
 import RightBar from '../components/RightBar'
+import { Add } from '@mui/icons-material'
 
 const Home = (props) => {
   return props.user && props.authenticated ? (
