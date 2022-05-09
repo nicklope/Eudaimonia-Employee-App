@@ -62,9 +62,37 @@ const deleteComment = async (req, res) => {
     if (deleted) {
       return res.status(200).send('Recipe deleted')
     }
-    throw new Error('Recipe not found')
+    throw new Error('Comment not found')
   } catch (error) {
     return res.status(500).send(error.message)
+  }
+}
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params
+    const deleted = await Post.findByIdAndDelete(id)
+    if (deleted) {
+      return res.status(200).send('Recipe deleted')
+    }
+    throw new Error('Post not found')
+  } catch (error) {
+    return res.status(500).send(error.message)
+  }
+}
+const updatePost = async (req, res) => {
+  try {
+    const { id } = req.params
+    const post = await Post.updateOne(
+      { _id: id },
+      {
+        $set: {
+          content: req.body.content
+        }
+      }
+    )
+    return res.status(200).json({ post })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
   }
 }
 module.exports = {
@@ -72,5 +100,7 @@ module.exports = {
   getPosts,
   createComment,
   getComments,
-  deleteComment
+  deleteComment,
+  deletePost,
+  updatePost
 }

@@ -80,6 +80,9 @@ if (!posts){
       key={post._id}
       posts={post}
       user={props.user}
+      getPosts={getPosts}
+      setPostRefresh={setRefresh}
+      postRefresh={refresh}
       />
       
       
