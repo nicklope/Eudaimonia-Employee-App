@@ -1,7 +1,8 @@
-import { AppBar, Toolbar, styled, Typography, Box,  Badge, Avatar, Menu, MenuItem, IconButton } from '@mui/material'
+import { AppBar, Toolbar, styled, Typography, Box,  Badge, Avatar, Menu, MenuItem, IconButton, LinearProgress } from '@mui/material'
 import { GroupWork, Login, Logout }from '@mui/icons-material'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 
 const FlexToolbar = styled(Toolbar)({
@@ -32,11 +33,25 @@ const NavBar = (props) => {
   const [loginColor, setLoginColor] = useState("inherit")
   const [logoutColor, setLogoutColor] = useState("inherit")
   const [homeColor, setHomeColor] = useState("inherit")
+  const [userData, setUserData] = useState(false)
+  const [refresh, setRefresh] = useState(false)
+  
+  const getUserData = async () => {
+    let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
+    console.log(res)
+    setUserData(res.data)
+    setRefresh(true)
+  }
   const navigate = useNavigate()
+  useEffect(()=>{
+    getUserData()
+    setRefresh(false)
+  },[refresh])
   return(
     <AppBar position="sticky">
       <FlexToolbar>
         <Typography variant='h5' sx={{display:{xs:"none", sm:"block"}}}>Eudaimonia Employee App</Typography>
+        <Avatar src={userData[0] ? userData[0].avatar : ""}/>
         <IconBox>
           <IconButton color={loginColor} onMouseOver={()=> setLoginColor("success")} onMouseLeave={() => setLoginColor("inherit")} onClick={() => navigate('/login')}>
             <LoginIcon />

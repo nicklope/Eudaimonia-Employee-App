@@ -5,16 +5,21 @@ import Register from './pages/Register'
 import Home from './pages/Home'
 import { useState, useEffect } from 'react'
 import { CheckSession } from './services/Auth'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function App() {
   const [authenticated, toggleAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState([])
+  const navigate = useNavigate()
   const handleLogOut = () => {
     //Reset all auth related state and clear localStorage
     console.log('clicked')
     setUser(null)
     toggleAuthenticated(false)
     localStorage.clear()
+    navigate('/login')
   }
 
   const checkToken = async () => {

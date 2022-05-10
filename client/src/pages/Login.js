@@ -46,7 +46,6 @@ const Login = (props) => {
   }
   return (
     <Box>
-      <NavBar />
       <Box
         sx={{
           display: 'flex',

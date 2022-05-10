@@ -6,12 +6,13 @@ import PostFeed from '../components/PostFeed'
 import { Box, Fab, Stack, Tooltip } from '@mui/material'
 import RightBar from '../components/RightBar'
 import { Add } from '@mui/icons-material'
+import Login from './Login'
 
 const Home = (props) => {
   return props.user && props.authenticated ? (
     <div className="App">
       <Box>
-        <NavBar handleLogOut={props.handleLogOut} />
+        <NavBar handleLogOut={props.handleLogOut} user={props.user} />
         <Stack
           direction="row"
           spacing={2}
@@ -31,7 +32,7 @@ const Home = (props) => {
       </Box>
     </div>
   ) : (
-    <div>Uh oh plz login</div>
+    <div>pls login</div>
   )
 }
 

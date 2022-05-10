@@ -69,7 +69,7 @@ const Register = () => {
 
   const submitRegister = () => {
     RegisterUser(values)
-    navigate('/')
+    navigate('/login')
   }
   return (
     <Box

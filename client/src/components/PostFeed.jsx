@@ -12,6 +12,7 @@ const PostFeed = (props) => {
   const [values, setValues] = useState({
     content: ''
   })
+  const [userData, setUserData] = useState([])
   const [refresh, setRefresh] = useState(false)
   const getPosts = async () => {
     let res = await axios.get("http://localhost:3001/eea/posts")
@@ -28,7 +29,13 @@ const PostFeed = (props) => {
     setRefresh(true)
 
   }
+  const getUserData = async () => {
+    let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
+    console.log(res)
+    setUserData(res.data)
+  }
   useEffect(()=>{
+    getUserData()
     getPosts()
     setRefresh(false)
   },[refresh])
@@ -58,7 +65,7 @@ if (!posts){
           noValidate
           autoComplete="off"
         >
-          <Avatar/>
+          <Avatar src={userData[0] ? userData[0].avatar : ""}/>
           <TextField
             id="outlined-basic"
             label="New Post"

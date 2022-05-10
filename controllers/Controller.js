@@ -95,6 +95,13 @@ const updatePost = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+const getUserData = async (req, res) => {
+  try {
+    const { userId } = req.params
+    const user = await User.find({ _id: userId })
+    res.send(user)
+  } catch (error) {}
+}
 module.exports = {
   createPost,
   getPosts,
@@ -102,5 +109,6 @@ module.exports = {
   getComments,
   deleteComment,
   deletePost,
-  updatePost
+  updatePost,
+  getUserData
 }

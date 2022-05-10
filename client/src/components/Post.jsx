@@ -12,6 +12,7 @@ const Post = (props) => {
 ///////////////////////////////////////////
   const navigate = useNavigate()
   const [comments, setComments] = useState([])
+  const [userData, setUserData] = useState([])
   const [expanded, setExpanded] = useState(false)
   const [refresh, setRefresh] = useState(false)
   const [values, setValues] = useState({
@@ -34,8 +35,12 @@ const Post = (props) => {
 
   const getComments = async () => {
     let res = await axios.get(`http://localhost:3001/eea/comments/${props.posts._id}`)
-    console.log(res)
     setComments(res.data)
+  }
+  const getUserData = async () => {
+    let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
+    console.log(res)
+    setUserData(res.data)
   }
   const deleteComment = async (id, commenter) => {
     if(props.user.id === commenter){
@@ -100,7 +105,9 @@ const Post = (props) => {
 
   useEffect(()=>{
     getComments()
+    getUserData()
     setRefresh(false)
+    console.log(props.user)
   },[refresh])
 
 ///////////////////////////////////////////
@@ -178,7 +185,7 @@ const Post = (props) => {
           noValidate
           autoComplete="off"
         >
-          <Avatar/>
+          <Avatar src={props.posts.user[0].avatar}/>
           <TextField
             id="outlined-basic"
             label="Update Post"
@@ -237,7 +244,7 @@ const Post = (props) => {
           noValidate
           autoComplete="off"
         >
-          <Avatar/>
+          <Avatar src={userData[0] ? userData[0].avatar : ""}/>
           <TextField
             id="outlined-basic"
             label="Comment"
@@ -257,7 +264,7 @@ const Post = (props) => {
                     .reverse()
                     .map((comment)=>(
               <Box m={1} display="flex" justifyContent="space-around">
-                <Avatar/>
+                <Avatar src={comment.user[0].avatar}/>
               <Typography m={1} variant="h6">{comment.user[0].userName}</Typography>
               <Stack  direction="row" spacing={2} m={2} justifyContent="space-between" alignItems="center" backgroundColor="#f5f5f5" width="70%">
               <Typography variant="body2" color="text.secondary" m={1}>{comment.content}</Typography>
