@@ -1,4 +1,4 @@
-import { ExpandMore, Favorite, FavoriteBorder, MoreVert, Share, Comment, ArrowCircleRight, Delete, MoreHoriz, Build, Add, Update } from '@mui/icons-material'
+import { ExpandMore, Favorite, FavoriteBorder, MoreVert, Share, Comment, ArrowCircleRight, Delete, MoreHoriz, Build, Add, Update, HowToRegOutlined, HowToReg, SelfImprovement, SelfImprovementOutlined, ForumOutlined } from '@mui/icons-material'
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, IconButton, LinearProgress, Menu, MenuItem, Modal, Stack, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
@@ -129,7 +129,7 @@ const Post = (props) => {
       <Card sx={{margin: "5px"}}>
 
         <CardHeader
-          avatar={<Avatar  src={props.posts.user[0].avatar}></Avatar>}
+          avatar={<Avatar  src={props.posts.user[0].avatar} sx={{ width: 56, height: 56 }}></Avatar>}
           title={props.posts.user[0].userName}
           subheader={props.posts.createdAt}
           action={<IconButton 
@@ -212,23 +212,22 @@ const Post = (props) => {
             {props.posts.content}
           </Typography>
         </CardContent>
-
-        <CardActions disableSpacing>
+        
+        <CardActions disableSpacing sx={{display: "flex", justifyContent: "right"}} >
           <IconButton aria-label="add to favorites">
-            <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
-          </IconButton>
-          <IconButton aria-label="share">
-            <Share />
+            <Checkbox icon={<SelfImprovementOutlined sx={{fontSize: '40px'}}/>} checkedIcon={<SelfImprovement sx={{fontSize: '40px'}}/>} />
           </IconButton>
           <IconButton
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
+          
         >
-          <Comment/>
+          <ForumOutlined sx={{fontSize: '40px'}}/>
           </IconButton>
         </CardActions>
+        
 
           <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box
@@ -263,10 +262,12 @@ const Post = (props) => {
             comments.slice(0)
                     .reverse()
                     .map((comment)=>(
-              <Box m={1} display="flex" justifyContent="space-around">
-                <Avatar src={comment.user[0].avatar}/>
-              <Typography m={1} variant="h6">{comment.user[0].userName}</Typography>
-              <Stack  direction="row" spacing={2} m={2} justifyContent="space-between" alignItems="center" backgroundColor="#f5f5f5" width="70%">
+              <Box m={1} display="flex" justifyContent="space-between">
+                <Stack display="flex" flexDirection="column" alignItems="center" width="10%">
+                  <Avatar src={comment.user[0].avatar} width="100%"/>
+                  <Typography m={1} variant="p" fontSize="10px">{comment.user[0].userName}</Typography>
+                </Stack>
+              <Stack  direction="row" spacing={2} m={2} justifyContent="space-between" alignItems="center" backgroundColor="#f5f5f5" width="80%">
               <Typography variant="body2" color="text.secondary" m={1}>{comment.content}</Typography>
               <IconButton 
                     id="comment-menu-button"

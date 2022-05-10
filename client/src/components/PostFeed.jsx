@@ -37,8 +37,12 @@ const PostFeed = (props) => {
   useEffect(()=>{
     getUserData()
     getPosts()
-    setRefresh(false)
-  },[refresh])
+    // setRefresh(false)
+    const timer = setInterval(()=>
+    {getPosts()}, 4000)
+    return () => clearInterval(timer)
+
+  },[])
 
 if (!posts){
   return (

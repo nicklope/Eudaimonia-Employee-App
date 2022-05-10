@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const FlexToolbar = styled(Toolbar)({
   display: "flex",
-  justifyContent:"space-around",
+  justifyContent:"space-between",
   backgroundColor: "black"
 })
 const EudaimoniaIcon = styled(GroupWork)({
@@ -51,10 +51,10 @@ const NavBar = (props) => {
     <AppBar position="sticky">
       <FlexToolbar>
         <Typography variant='h5' sx={{display:{xs:"none", sm:"block"}}}>Eudaimonia Employee App</Typography>
-        <Avatar src={userData[0] ? userData[0].avatar : ""}/>
+        
         <IconBox>
           <IconButton color={loginColor} onMouseOver={()=> setLoginColor("success")} onMouseLeave={() => setLoginColor("inherit")} onClick={() => navigate('/login')}>
-            <LoginIcon />
+          <Avatar src={userData[0] ? userData[0].avatar : ""} sx={{ width: 56, height: 56 }}/>
           </IconButton>
           <IconButton color={logoutColor} onMouseOver={()=> setLogoutColor("success")} onMouseLeave={() => setLogoutColor("inherit")} onClick={props.handleLogOut}>
             <LogoutIcon />

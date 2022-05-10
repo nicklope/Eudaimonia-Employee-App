@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom'
 function App() {
   const [authenticated, toggleAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
-  const [userData, setUserData] = useState([])
   const navigate = useNavigate()
   const handleLogOut = () => {
     //Reset all auth related state and clear localStorage
