@@ -122,7 +122,7 @@ const Post = (props) => {
       <Card sx={{margin: "5px"}}>
 
         <CardHeader
-          avatar={<Avatar  aria-label="recipe"></Avatar>}
+          avatar={<Avatar  src={props.posts.user[0].avatar}></Avatar>}
           title={props.posts.user[0].userName}
           subheader={props.posts.createdAt}
           action={<IconButton 
@@ -161,7 +161,7 @@ const Post = (props) => {
           transform: 'translate(-50%, -50%)',
           width: 400,
           bgcolor: 'white',
-          border: '2px solid #000',
+          
           boxShadow: 24,
           p: 4,}}>
        <Box

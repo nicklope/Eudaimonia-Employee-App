@@ -1,6 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
+import Register from './pages/Register'
 import Home from './pages/Home'
 import { useState, useEffect } from 'react'
 import { CheckSession } from './services/Auth'
@@ -47,6 +48,17 @@ function App() {
           path="/login"
           element={
             <Login
+              setUser={setUser}
+              toggleAuthenticated={toggleAuthenticated}
+            />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Register
+              user={user}
+              authenticated={authenticated}
               setUser={setUser}
               toggleAuthenticated={toggleAuthenticated}
             />
