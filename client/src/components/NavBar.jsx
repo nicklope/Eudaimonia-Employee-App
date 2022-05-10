@@ -50,7 +50,7 @@ const NavBar = (props) => {
   return(
     <AppBar position="sticky">
       <FlexToolbar>
-        <Typography variant='h5' sx={{display:{xs:"none", sm:"block"}}}>Eudaimonia Employee App</Typography>
+        <Typography variant='h3' sx={{display:{xs:"none", sm:"block"}}}>EUDAIMONIA</Typography>
         
         <IconBox>
           <IconButton color={loginColor} onMouseOver={()=> setLoginColor("success")} onMouseLeave={() => setLoginColor("inherit")} onClick={() => navigate('/login')}>

@@ -18,6 +18,7 @@ const Post = (props) => {
   const [values, setValues] = useState({
     content: ''
   })
+  const [checked, setChecked] = useState(false)
   const [postAnchorEl, setPostAnchorEl] = useState(null);
   const [commentAnchorEl, setCommentAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -41,6 +42,9 @@ const Post = (props) => {
     let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
     console.log(res)
     setUserData(res.data)
+    if(res.data[0].postsEnlightened.includes(props.posts._id)) setChecked(true)
+    
+   
   }
   const deleteComment = async (id, commenter) => {
     if(props.user.id === commenter){
@@ -99,6 +103,28 @@ const Post = (props) => {
     setFormValue(props.posts.content)}
   ;
   const handleModalClose = () => setModalOpen(false);
+  
+  const handleCheckbox = async (post, user) => {
+    if (!checked || !userData[0].postsEnlightened.includes(post)) {
+      await axios.put(`http://localhost:3001/eea/enlighten/${post}/${user}`)
+      setChecked(true)
+      setRefresh(true)
+    }
+    else if (checked || userData[0].postsEnlightened.includes(post)) {
+      await axios.put(`http://localhost:3001/eea/unenlighten/${post}/${user}`)
+      setChecked(false)
+      setRefresh(true)
+      }
+  }
+  const checkBoxUserTrue = () => {
+    
+    if(props.data[0].postsEnlightened.includes(props.posts._id) ){
+      console.log("checking")
+      setChecked(true)
+    }
+    else  if (!props.data[0].postsEnlightened.includes(props.posts._id))
+{    setChecked(false)}
+  }
 ///////////////////////////////////////////
 ////////////// useEffect //////////////////
 ///////////////////////////////////////////
@@ -106,7 +132,12 @@ const Post = (props) => {
   useEffect(()=>{
     getComments()
     getUserData()
+    console.log(props.data)
     setRefresh(false)
+   
+    // const timer = setInterval(()=>
+    // {getUserData()}, 1000)
+    // return () => clearInterval(timer)
     console.log(props.user)
   },[refresh])
 
@@ -114,7 +145,7 @@ const Post = (props) => {
 ///////////////// Render //////////////////
 ///////////////////////////////////////////
 
-  if(!comments){
+  if(!comments || !userData){
     return (
       <Box flex={4} p={10} >
         
@@ -214,18 +245,26 @@ const Post = (props) => {
         </CardContent>
         
         <CardActions disableSpacing sx={{display: "flex", justifyContent: "right"}} >
-          <IconButton aria-label="add to favorites">
-            <Checkbox icon={<SelfImprovementOutlined sx={{fontSize: '40px'}}/>} checkedIcon={<SelfImprovement sx={{fontSize: '40px'}}/>} />
-          </IconButton>
-          <IconButton
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
           
-        >
-          <ForumOutlined sx={{fontSize: '40px'}}/>
-          </IconButton>
+          <Box>
+            <IconButton
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ForumOutlined sx={{fontSize: '40px'}}/>
+            </IconButton>
+
+            <IconButton aria-label="add to favorites" label="enlightenmen">
+              <Checkbox      
+                checked={checked}
+                onChange={() => handleCheckbox(props.posts._id, props.user.id)}
+                icon={<SelfImprovementOutlined sx={{fontSize: '40px'}}/>} checkedIcon={<SelfImprovement sx={{fontSize: '40px'}}/>} />
+                {props.posts.enlightenment}
+            </IconButton>
+
+          </Box>
         </CardActions>
         
 

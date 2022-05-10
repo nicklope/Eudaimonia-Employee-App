@@ -16,7 +16,6 @@ const PostFeed = (props) => {
   const [refresh, setRefresh] = useState(false)
   const getPosts = async () => {
     let res = await axios.get("http://localhost:3001/eea/posts")
-    console.log(res)
     setPosts(res.data)
   }
   const handleChange = (prop) => (event) => {
@@ -37,12 +36,12 @@ const PostFeed = (props) => {
   useEffect(()=>{
     getUserData()
     getPosts()
-    // setRefresh(false)
+    setRefresh(false)
     const timer = setInterval(()=>
-    {getPosts()}, 4000)
+    {getPosts()}, 1000)
     return () => clearInterval(timer)
 
-  },[])
+  },[refresh])
 
 if (!posts){
   return (
@@ -94,6 +93,7 @@ if (!posts){
       getPosts={getPosts}
       setPostRefresh={setRefresh}
       postRefresh={refresh}
+      data={userData}
       />
       
       
