@@ -8,7 +8,7 @@ import axios from 'axios'
 const FlexToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent:"space-between",
-  backgroundColor: "black"
+  backgroundColor: "#424242"
 })
 const EudaimoniaIcon = styled(GroupWork)({
   fontSize: 60
@@ -53,13 +53,13 @@ const NavBar = (props) => {
         <Typography variant='h3' sx={{display:{xs:"none", sm:"block"}}}>EUDAIMONIA</Typography>
         
         <IconBox>
-          <IconButton color={loginColor} onMouseOver={()=> setLoginColor("success")} onMouseLeave={() => setLoginColor("inherit")} onClick={() => navigate('/login')}>
+          <IconButton color={loginColor} onMouseOver={()=> setLoginColor("primary")} onMouseLeave={() => setLoginColor("inherit")} onClick={() => navigate('/login')}>
           <Avatar src={userData[0] ? userData[0].avatar : ""} sx={{ width: 56, height: 56 }}/>
           </IconButton>
-          <IconButton color={logoutColor} onMouseOver={()=> setLogoutColor("success")} onMouseLeave={() => setLogoutColor("inherit")} onClick={props.handleLogOut}>
+          <IconButton color={logoutColor} onMouseOver={()=> setLogoutColor("primary")} onMouseLeave={() => setLogoutColor("inherit")} onClick={props.handleLogOut}>
             <LogoutIcon />
           </IconButton>
-          <IconButton color={homeColor} onMouseOver={()=> setHomeColor("success")} onMouseLeave={() => setHomeColor("inherit")} onClick={() => navigate('/')}>
+          <IconButton color={homeColor} onMouseOver={()=> setHomeColor("primary")} onMouseLeave={() => setHomeColor("inherit")} onClick={() => navigate('/')}>
           <EudaimoniaIcon />
           </IconButton>
         </IconBox>

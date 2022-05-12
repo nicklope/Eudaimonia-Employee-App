@@ -9,9 +9,18 @@ const User = new Schema(
     avatar: { type: String, required: true },
     location: { type: String, required: true },
     aboutMe: { type: String, required: true },
+    coverPhoto: { type: String, default: null },
     bloodType: { type: String, required: true },
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    enlightenment: { type: Number, required: true, default: 0 },
+    clockedIn: { type: Boolean, default: false },
+    postsEnlightened: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+      }
+    ]
   },
   { timestamps: true }
 )

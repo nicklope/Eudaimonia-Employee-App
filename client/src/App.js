@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { CheckSession } from './services/Auth'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Profile from './pages/Profile'
 
 function App() {
   const [authenticated, toggleAuthenticated] = useState(false)
@@ -62,6 +63,18 @@ function App() {
           element={
             <Register
               user={user}
+              authenticated={authenticated}
+              setUser={setUser}
+              toggleAuthenticated={toggleAuthenticated}
+            />
+          }
+        />
+        <Route
+          path="/user/:id"
+          element={
+            <Profile
+              user={user}
+              handleLogOut={handleLogOut}
               authenticated={authenticated}
               setUser={setUser}
               toggleAuthenticated={toggleAuthenticated}

@@ -37,10 +37,10 @@ const Post = (props) => {
   const getComments = async () => {
     let res = await axios.get(`http://localhost:3001/eea/comments/${props.posts._id}`)
     setComments(res.data)
+    
   }
   const getUserData = async () => {
     let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
-    console.log(res)
     setUserData(res.data)
     if(res.data[0].postsEnlightened.includes(props.posts._id)) setChecked(true)
     
@@ -125,6 +125,12 @@ const Post = (props) => {
     else  if (!props.data[0].postsEnlightened.includes(props.posts._id))
 {    setChecked(false)}
   }
+  const commentNavigate = (commenter) => {
+    navigate('/')
+    navigate(`/user/${commenter}`)
+    window.location.reload(false);
+    setRefresh(true)
+  }
 ///////////////////////////////////////////
 ////////////// useEffect //////////////////
 ///////////////////////////////////////////
@@ -132,13 +138,7 @@ const Post = (props) => {
   useEffect(()=>{
     getComments()
     getUserData()
-    console.log(props.data)
     setRefresh(false)
-   
-    // const timer = setInterval(()=>
-    // {getUserData()}, 1000)
-    // return () => clearInterval(timer)
-    console.log(props.user)
   },[refresh])
 
 ///////////////////////////////////////////
@@ -160,7 +160,16 @@ const Post = (props) => {
       <Card sx={{margin: "5px"}}>
 
         <CardHeader
-          avatar={<Avatar  src={props.posts.user[0].avatar} sx={{ width: 56, height: 56 }}></Avatar>}
+          avatar={<Avatar  
+                      src={props.profileAvatar ? props.profileAvatar : props.posts.user[0].avatar} 
+                      sx={{ width: 56, height: 56,    
+                        '&:hover': {
+                        cursor: 'pointer',
+                        opacity: ".5",
+                      }}} 
+                      onClick={() => navigate(`/user/${props.posts.user[0]._id}`) }>
+
+                      </Avatar>}
           title={props.posts.user[0].userName}
           subheader={props.posts.createdAt}
           action={<IconButton 
@@ -216,7 +225,7 @@ const Post = (props) => {
           noValidate
           autoComplete="off"
         >
-          <Avatar src={props.posts.user[0].avatar}/>
+          <Avatar src={props.posts.user[0].avatar} />
           <TextField
             id="outlined-basic"
             label="Update Post"
@@ -256,7 +265,7 @@ const Post = (props) => {
               <ForumOutlined sx={{fontSize: '40px'}}/>
             </IconButton>
 
-            <IconButton aria-label="add to favorites" label="enlightenmen">
+            <IconButton aria-label="add to favorites" label="enlightenmen" >
               <Checkbox      
                 checked={checked}
                 onChange={() => handleCheckbox(props.posts._id, props.user.id)}
@@ -303,7 +312,15 @@ const Post = (props) => {
                     .map((comment)=>(
               <Box m={1} display="flex" justifyContent="space-between">
                 <Stack display="flex" flexDirection="column" alignItems="center" width="10%">
-                  <Avatar src={comment.user[0].avatar} width="100%"/>
+                  <Avatar 
+                    src={comment.user[0].avatar} 
+                    onClick={() => commentNavigate(comment.user[0]._id)}
+                    width="100%"                      
+                    sx={{ width: 56, height: 56,    
+                        '&:hover': {
+                        cursor: 'pointer',
+                        opacity: ".5",
+                      }}} />
                   <Typography m={1} variant="p" fontSize="10px">{comment.user[0].userName}</Typography>
                 </Stack>
               <Stack  direction="row" spacing={2} m={2} justifyContent="space-between" alignItems="center" backgroundColor="#f5f5f5" width="80%">

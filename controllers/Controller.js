@@ -102,6 +102,98 @@ const getUserData = async (req, res) => {
     res.send(user)
   } catch (error) {}
 }
+const getUserPosts = async (req, res) => {
+  try {
+    const { userId } = req.params
+    const user = await User.findOne({ _id: userId }).populate('posts')
+    res.send(user.posts)
+  } catch (error) {}
+}
+const enlightenPost = async (req, res) => {
+  try {
+    const userId = req.params.userId
+    const postId = req.params.postId
+    const user = await User.findOne({ _id: userId })
+    const post = await Post.findOne({ _id: postId })
+    const poster = await User.findOne({ _id: post.user[0] })
+    const updatePost = await Post.updateOne(
+      { _id: postId },
+      {
+        $inc: {
+          enlightenment: +1
+        }
+      }
+    )
+    const updateUser = await User.updateOne(
+      { _id: poster._id },
+      {
+        $inc: {
+          enlightenment: +1
+        }
+      }
+    )
+
+    user.postsEnlightened.push(postId)
+
+    user.save()
+    return res.status(200).json({ updatePost, updateUser })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+const unEnlightenPost = async (req, res) => {
+  try {
+    const userId = req.params.userId
+    const postId = req.params.postId
+    const post = await Post.findOne({ _id: postId })
+    const poster = await User.findOne({ _id: post.user[0] })
+    const updatePost = await Post.updateOne(
+      { _id: postId },
+      {
+        $inc: {
+          enlightenment: -1
+        }
+      }
+    )
+    const user = await User.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          postsEnlightened: postId
+        }
+      }
+    )
+    const updateUser = await User.updateOne(
+      { _id: poster._id },
+      {
+        $inc: {
+          enlightenment: -1
+        }
+      }
+    )
+
+    return res.status(200).json({ updatePost, user, updateUser })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+const updateCoverPhoto = async (req, res) => {
+  try {
+    const { id } = req.params
+    const user = await User.updateOne(
+      { _id: id },
+      {
+        $set: {
+          coverPhoto: req.body.coverPhoto
+        }
+      }
+    )
+    return res.status(200).json({ user })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -110,5 +202,9 @@ module.exports = {
   deleteComment,
   deletePost,
   updatePost,
-  getUserData
+  getUserData,
+  enlightenPost,
+  unEnlightenPost,
+  getUserPosts,
+  updateCoverPhoto
 }

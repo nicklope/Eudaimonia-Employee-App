@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton, LinearProgress, TextField } from "@mui/material"
+import { Avatar, Box, Card, Divider, IconButton, LinearProgress, TextField } from "@mui/material"
 import Post from "./Post"
 import { useEffect, useState } from 'react'
 import axios from "axios"
@@ -54,11 +54,12 @@ if (!posts){
 } else
   return (
     <Box flex={4} p={2}>
+      <Card>
        <Box
           component="form"
           sx={{
               display: "flex",
-              m: 1,
+              m: 2,
               width: '100%',
               justifyContent: "space-around",
               alignItems: "center",
@@ -68,6 +69,7 @@ if (!posts){
           noValidate
           autoComplete="off"
         >
+          
           <Avatar src={userData[0] ? userData[0].avatar : ""}/>
           <TextField
             id="outlined-basic"
@@ -82,6 +84,8 @@ if (!posts){
             <Add sx={{fontSize: '50px'}}/>
           </IconButton>
           </Box>
+          </Card>
+          <Divider sx={{margin: "30px"}}/>
       {posts.slice(0)
             .reverse()
             .map((post)=>
