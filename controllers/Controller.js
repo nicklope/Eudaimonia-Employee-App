@@ -99,7 +99,7 @@ const updatePost = async (req, res) => {
 const getUserData = async (req, res) => {
   try {
     const { userId } = req.params
-    const user = await User.find({ _id: userId })
+    const user = await User.find({ _id: userId }).populate('partnerToken')
     res.send(user)
   } catch (error) {}
 }
@@ -229,6 +229,38 @@ const createToken = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+const clockIn = async (req, res) => {
+  try {
+    const { id } = req.params
+    const user = await User.updateOne(
+      { _id: id },
+      {
+        $set: {
+          clockedIn: true
+        }
+      }
+    )
+    res.send(user)
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+const clockOut = async (req, res) => {
+  try {
+    const { id } = req.params
+    const user = await User.updateOne(
+      { _id: id },
+      {
+        $set: {
+          clockedIn: false
+        }
+      }
+    )
+    res.send(user)
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
 module.exports = {
   createPost,
   getPosts,
@@ -243,5 +275,7 @@ module.exports = {
   getUserPosts,
   updateCoverPhoto,
   updateUser,
-  createToken
+  createToken,
+  clockIn,
+  clockOut
 }

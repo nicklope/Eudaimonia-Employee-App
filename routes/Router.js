@@ -15,4 +15,6 @@ router.put('/unenlighten/:postId/:userId', controller.unEnlightenPost)
 router.put('/cover/:id', controller.updateCoverPhoto)
 router.put('/user/:id', controller.updateUser)
 router.post('/token/:id', controller.createToken)
+router.put('/clockin/:id', controller.clockIn)
+router.put('/clockout/:id', controller.clockOut)
 module.exports = router
