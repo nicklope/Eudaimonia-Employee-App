@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import NavBar from '../components/NavBar'
 import LeftBar from '../components/LeftBar'
 import PostFeed from '../components/PostFeed'
-
+import ChatBox from '../components/ChatBox'
 import { Box, Fab, Stack, Tooltip } from '@mui/material'
 import RightBar from '../components/RightBar'
 import { Add } from '@mui/icons-material'
@@ -14,22 +14,25 @@ const Home = (props) => {
       <Box>
         <NavBar handleLogOut={props.handleLogOut} user={props.user} />
         <Stack
-          direction="row"
-          spacing={2}
-          jusiftyContent="spacebetween"
+          spacing={1}
           sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignSelf: 'center',
             margin: {
               xs: '0',
-              sm: ' 0 50px 0 50px',
-              xl: ' 0 300px 0 300px'
+              sm: ' 0 0px 0 50px',
+              xl: ' 0 50px 0 280px'
             }
           }}
         >
-          <LeftBar />
+          <LeftBar user={props.user} handleLogOut={props.handleLogOut} />
           <PostFeed user={props.user} />
           <RightBar />
+          <ChatBox />
         </Stack>
       </Box>
+      <ChatBox />
     </div>
   ) : (
     <div>pls login</div>

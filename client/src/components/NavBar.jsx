@@ -2,21 +2,20 @@ import { AppBar, Toolbar, styled, Typography, Box,  Badge, Avatar, Menu, MenuIte
 import { GroupWork, Login, Logout }from '@mui/icons-material'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import EudaiMoniaLogo from '../images/EudaimoniaLogo.png'
 import axios from 'axios'
 
 
 const FlexToolbar = styled(Toolbar)({
   display: "flex",
-  justifyContent:"space-between",
+  justifyContent:"space-around",
   backgroundColor: "#424242"
 })
 const EudaimoniaIcon = styled(GroupWork)({
   fontSize: 60
   
 })
-const LoginIcon = styled(Login)({
-  fontSize: 60,
-})
+
 const LogoutIcon = styled(Logout)({
   fontSize: 60,
 })
@@ -38,7 +37,6 @@ const NavBar = (props) => {
   
   const getUserData = async () => {
     let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
-    console.log(res)
     setUserData(res.data)
     setRefresh(true)
   }
@@ -50,15 +48,9 @@ const NavBar = (props) => {
   return(
     <AppBar position="sticky">
       <FlexToolbar>
-        <Typography variant='h3' sx={{display:{xs:"none", sm:"block"}}}>EUDAIMONIA</Typography>
+        <Box component='img' src={EudaiMoniaLogo} sx={{display:{xs:"none", sm:"block"}, height: "100px", zIndex: "100", '&:hover': {cursor: 'pointer', opacity: ".5",}}} onClick={()=> navigate('/')}/>
         
-        <IconBox>
-          <IconButton color={loginColor} onMouseOver={()=> setLoginColor("primary")} onMouseLeave={() => setLoginColor("inherit")} onClick={() => navigate('/login')}>
-          <Avatar src={userData[0] ? userData[0].avatar : ""} sx={{ width: 56, height: 56 }}/>
-          </IconButton>
-          <IconButton color={logoutColor} onMouseOver={()=> setLogoutColor("primary")} onMouseLeave={() => setLogoutColor("inherit")} onClick={props.handleLogOut}>
-            <LogoutIcon />
-          </IconButton>
+        <IconBox sx={{display:{xs:"block", sm:"none"}}}>
           <IconButton color={homeColor} onMouseOver={()=> setHomeColor("primary")} onMouseLeave={() => setHomeColor("inherit")} onClick={() => navigate('/')}>
           <EudaimoniaIcon />
           </IconButton>

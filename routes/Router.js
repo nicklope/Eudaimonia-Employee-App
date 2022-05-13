@@ -13,4 +13,6 @@ router.put('/updatepost/:id', controller.updatePost)
 router.put('/enlighten/:postId/:userId', controller.enlightenPost)
 router.put('/unenlighten/:postId/:userId', controller.unEnlightenPost)
 router.put('/cover/:id', controller.updateCoverPhoto)
+router.put('/user/:id', controller.updateUser)
+router.post('/token/:id', controller.createToken)
 module.exports = router

@@ -8,6 +8,8 @@ import { CheckSession } from './services/Auth'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Profile from './pages/Profile'
+import Partner from './pages/Partner'
+import ClockIn from './pages/ClockIn'
 
 function App() {
   const [authenticated, toggleAuthenticated] = useState(false)
@@ -80,6 +82,14 @@ function App() {
               toggleAuthenticated={toggleAuthenticated}
             />
           }
+        />
+        <Route
+          path="/partner"
+          element={<Partner user={user} authenticated={authenticated} />}
+        />
+        <Route
+          path="/clockin"
+          element={<ClockIn user={user} authenticated={authenticated} />}
         />
       </Routes>
     </div>

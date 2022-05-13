@@ -105,12 +105,12 @@ const Post = (props) => {
   const handleModalClose = () => setModalOpen(false);
   
   const handleCheckbox = async (post, user) => {
-    if (!checked || !userData[0].postsEnlightened.includes(post)) {
+    if (!checked && !userData[0].postsEnlightened.includes(post)) {
       await axios.put(`http://localhost:3001/eea/enlighten/${post}/${user}`)
       setChecked(true)
       setRefresh(true)
     }
-    else if (checked || userData[0].postsEnlightened.includes(post)) {
+    else if (checked && userData[0].postsEnlightened.includes(post)) {
       await axios.put(`http://localhost:3001/eea/unenlighten/${post}/${user}`)
       setChecked(false)
       setRefresh(true)
@@ -248,9 +248,10 @@ const Post = (props) => {
       /> */}
 
         <CardContent>
-          <Typography variant="body4" color="text.secondary">
+          <Typography variant="body4" color="text.secondary" sx={{fontSize: "22px"}}>
             {props.posts.content}
           </Typography>
+          <CardMedia component={props.posts.image ? "img" : "div"} src={props.posts.image} sx={{marginTop: "15px"}}/>
         </CardContent>
         
         <CardActions disableSpacing sx={{display: "flex", justifyContent: "right"}} >

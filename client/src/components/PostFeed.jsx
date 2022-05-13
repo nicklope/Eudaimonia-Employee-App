@@ -1,8 +1,8 @@
-import { Avatar, Box, Card, Divider, IconButton, LinearProgress, TextField } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Card, CardMedia, Divider, IconButton, LinearProgress, Modal, TextField, Typography } from "@mui/material"
 import Post from "./Post"
 import { useEffect, useState } from 'react'
 import axios from "axios"
-import { Add } from "@mui/icons-material"
+import { Add, ExpandMore, Photo } from "@mui/icons-material"
 
 
 
@@ -10,10 +10,14 @@ const PostFeed = (props) => {
 
   const [posts, setPosts] = useState()
   const [values, setValues] = useState({
-    content: ''
+    content: '',
+    image: ''
   })
   const [userData, setUserData] = useState([])
   const [refresh, setRefresh] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
+
+
   const getPosts = async () => {
     let res = await axios.get("http://localhost:3001/eea/posts")
     setPosts(res.data)
@@ -24,7 +28,7 @@ const PostFeed = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     await axios.post(`http://localhost:3001/eea/newpost/${props.user.id}`, values)
-    setValues({ content: ""})
+    setValues({ content: "", image: ""})
     setRefresh(true)
 
   }
@@ -33,6 +37,9 @@ const PostFeed = (props) => {
     console.log(res)
     setUserData(res.data)
   }
+  const handleModalOpen = () =>   setModalOpen(true);
+  
+   const handleModalClose = () => setModalOpen(false);
   useEffect(()=>{
     getUserData()
     getPosts()
@@ -53,13 +60,58 @@ if (!posts){
   )
 } else
   return (
-    <Box flex={4} p={2}>
+    <Box flex={4} p={2} maxWidth="600px">
       <Card>
-       <Box
+        <CardMedia component={values.image ? "img" : "div"} src={values.image}></CardMedia>
+        <Box
           component="form"
           sx={{
               display: "flex",
               m: 2,
+              width: "95%",
+              justifyContent: "center",
+              alignItems: "center",
+          }}
+          noValidate
+          autoComplete="off"
+        > 
+          <Avatar src={userData[0] ? userData[0].avatar : ""}/>
+          <TextField
+            id="outlined-basic"
+            label="New Post"
+            variant="outlined"
+            sx={{m:1, width: "70%" }}
+            onChange={handleChange('content')}
+            value={values.content}
+          />
+          <IconButton onClick={handleSubmit}>
+            <Add sx={{fontSize: '40px'}}/>
+          </IconButton>
+          <IconButton onClick={handleModalOpen}>
+            <Photo sx={{fontSize: '40px'}}/>
+          </IconButton>
+          </Box>
+          <Modal
+          open={modalOpen}
+          onClose={() => handleModalClose()}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+        <Box sx={{  
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'white',
+          
+          boxShadow: 24,
+          p: 4,}}>
+       <Box
+          component="form"
+          sx={{
+              display: "flex",
+              m: 1,
               width: '100%',
               justifyContent: "space-around",
               alignItems: "center",
@@ -70,21 +122,22 @@ if (!posts){
           autoComplete="off"
         >
           
-          <Avatar src={userData[0] ? userData[0].avatar : ""}/>
           <TextField
             id="outlined-basic"
-            label="New Post"
+            label="Add photo url..."
             variant="outlined"
             sx={{m:1, width: "70%" }}
-            onChange={handleChange('content')}
-            value={values.content}
-           
+            onChange={handleChange('image')}
+            value={values.image}
           />
-          <IconButton onClick={handleSubmit}>
-            <Add sx={{fontSize: '50px'}}/>
-          </IconButton>
+          {/* <IconButton onClick={() => updatePost()}>
+            <Update sx={{fontSize: '50px'}}/>
+          </IconButton> */}
           </Box>
-          </Card>
+        </Box>
+      </Modal>
+
+      </Card>
           <Divider sx={{margin: "30px"}}/>
       {posts.slice(0)
             .reverse()

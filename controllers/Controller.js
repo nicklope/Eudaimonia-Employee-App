@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const Post = require('../models/Post')
 const Comment = require('../models/Comment')
+const PartnerToken = require('../models/PartnerToken')
 const { updateOne, where } = require('../models/User')
 
 const createPost = async (req, res) => {
@@ -193,7 +194,41 @@ const updateCoverPhoto = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
-
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params
+    const post = await User.updateOne(
+      { _id: id },
+      {
+        $set: {
+          coverPhoto: req.body.coverPhoto,
+          avatar: req.body.avatar,
+          userName: req.body.userName,
+          aboutMe: req.body.aboutMe
+        }
+      }
+    )
+    return res.status(200).json({ post })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+const createToken = async (req, res) => {
+  try {
+    const { id } = req.params
+    const user = await User.findOne({ _id: id })
+    const partnerToken = await new PartnerToken(req.body)
+    user.partnerToken = []
+    user.partnerToken.push(partnerToken._id)
+    partnerToken.token = Math.floor(Math.random() * (999999 - 100000) + 100000)
+    await partnerToken.user.push(user._id)
+    await partnerToken.save()
+    await user.save()
+    res.send(partnerToken)
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
 module.exports = {
   createPost,
   getPosts,
@@ -206,5 +241,7 @@ module.exports = {
   enlightenPost,
   unEnlightenPost,
   getUserPosts,
-  updateCoverPhoto
+  updateCoverPhoto,
+  updateUser,
+  createToken
 }

@@ -35,8 +35,11 @@ import RightBar from '../components/RightBar'
 const Profile = (props) => {
   const [userData, setUserData] = useState(false)
   const [posts, setPosts] = useState()
-  const [values, setValues] = useState({
-    content: ''
+  const [formValue, setFormValue] = useState({
+    coverPhoto: '',
+    avatar: userData[0] ? userData[0].avatar : '',
+    userName: '',
+    aboutMe: ''
   })
   const [modalOpen, setModalOpen] = useState(false)
   const [refresh, setRefresh] = useState(false)
@@ -52,23 +55,27 @@ const Profile = (props) => {
     let res = await axios.get(`http://localhost:3001/eea/posts/${id}`)
     setPosts(res.data)
   }
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    await axios.post(
-      `http://localhost:3001/eea/newpost/${props.user.id}`,
-      values
-    )
-    setValues({ content: '' })
-    setRefresh(true)
-  }
 
   const handleModalOpen = () => {
+    setFormValue({
+      coverPhoto: userData[0] ? userData[0].coverPhoto : '',
+      avatar: userData[0] ? userData[0].avatar : '',
+      userName: userData[0] ? userData[0].userName : '',
+      aboutMe: userData[0] ? userData[0].aboutMe : ''
+    })
     setModalOpen(true)
   }
+  const handleUpdateFormChange = (prop) => (event) => {
+    console.log(event.target.value)
+    setFormValue({ ...formValue, [prop]: event.target.value })
+  }
   const handleModalClose = () => setModalOpen(false)
+
+  const updateProfile = async () => {
+    axios.put(`http://localhost:3001/eea/user/${id}`, formValue)
+    setModalOpen(false)
+    setRefresh(true)
+  }
   useEffect(() => {
     console.log(id)
     getUserData()
@@ -86,6 +93,7 @@ const Profile = (props) => {
       </div>
     )
   }
+
   return (
     <Box display="flex" flexDirection="column" id="profile">
       <NavBar handleLogOut={props.handleLogOut} user={props.user} />
@@ -131,6 +139,7 @@ const Profile = (props) => {
                       id="profile-settings-button"
                       variant="outlined"
                       onClick={() => handleModalOpen()}
+                      disabled={id === props.user.id ? false : true}
                       sx={{ marginBottom: '-30px', border: '2px solid gray' }}
                     >
                       <EditOutlined
@@ -164,6 +173,7 @@ const Profile = (props) => {
                       component="form"
                       sx={{
                         display: 'flex',
+                        flexDirection: 'column',
                         m: 1,
                         width: '100%',
                         justifyContent: 'space-around',
@@ -172,16 +182,42 @@ const Profile = (props) => {
                       noValidate
                       autoComplete="off"
                     >
-                      <Avatar />
                       <TextField
                         id="outlined-basic"
-                        label="Update Post"
+                        label="Add cover photo..."
                         variant="outlined"
                         sx={{ m: 1, width: '70%' }}
-                        // onChange={handleUpdateFormChange()}
-                        // value={formValue}
+                        onChange={handleUpdateFormChange('coverPhoto')}
+                        value={formValue.coverPhoto}
                       />
-                      <IconButton>
+                      <Stack direction="row" width="100%">
+                        <Avatar sx={{ transform: 'translateY(13px)' }} />
+                        <TextField
+                          id="outlined-basic"
+                          label="Update avatar..."
+                          variant="outlined"
+                          sx={{ m: 1, width: '70%', marginLeft: '20px' }}
+                          onChange={handleUpdateFormChange('avatar')}
+                          value={formValue.avatar}
+                        />
+                      </Stack>
+                      <TextField
+                        id="outlined-basic"
+                        label="Update username..."
+                        variant="outlined"
+                        sx={{ m: 1, width: '70%' }}
+                        onChange={handleUpdateFormChange('userName')}
+                        value={formValue.userName}
+                      />
+                      <TextField
+                        id="outlined-basic"
+                        label="Update about..."
+                        variant="outlined"
+                        sx={{ m: 1, width: '70%' }}
+                        onChange={handleUpdateFormChange('aboutMe')}
+                        value={formValue.aboutMe}
+                      />
+                      <IconButton onClick={updateProfile}>
                         <Update sx={{ fontSize: '50px' }} />
                       </IconButton>
                     </Box>

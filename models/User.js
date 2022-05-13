@@ -15,6 +15,7 @@ const User = new Schema(
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     enlightenment: { type: Number, required: true, default: 0 },
     clockedIn: { type: Boolean, default: false },
+    partnerToken: [{ type: Schema.Types.ObjectId, ref: 'PartnerToken' }],
     postsEnlightened: [
       {
         type: Schema.Types.ObjectId,

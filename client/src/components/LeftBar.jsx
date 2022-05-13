@@ -1,60 +1,59 @@
 
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
-import {  AccountBox, Article, DarkMode, Groups, Home, Settings,  Storefront } from '@mui/icons-material';
+import { Avatar, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
+import {  AccessTime, AccountBox, Article, DarkMode, Groups, Handshake, Home, Logout, Settings,  Storefront } from '@mui/icons-material';
+import { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios';
 
+const LeftBar = (props) => {
 
-const LeftBar = () => {
+  const [userData, setUserData] = useState([])
+  const navigate = useNavigate()
+  const getUserData = async () => {
+    let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
+    console.log(res)
+    setUserData(res.data)
+  }
+
+  useEffect(()=>{
+    getUserData()
+  },[])
   return (
     
     <Box flex={1} p={2} sx={{ display: {xs: "none", sm: "block"}}}>
           <Box position="fixed">
           <List>
     <ListItem disablePadding>
-      <ListItemButton >
-        <ListItemIcon>
-          <Home/>
+      <ListItemButton onClick={()=> navigate(`/user/${props.user.id}`)}>
+        <ListItemIcon >
+          <Avatar src={userData[0] ? userData[0].avatar : null}/>
         </ListItemIcon>
-        <ListItemText primary="Home Page" />
+        <ListItemText primary={userData[0] ? userData[0].userName : null} />
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton >
+      <ListItemButton onClick={()=> navigate('/partner')} >
         <ListItemIcon>
-          <Article/>
+          <Handshake/>
         </ListItemIcon>
-        <ListItemText primary="Pages" />
+        <ListItemText primary="Partner Program" />
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton >
+      <ListItemButton onClick={() => navigate('/clockin')}>
         <ListItemIcon>
-          <Groups/>
+          <AccessTime/>
         </ListItemIcon>
-        <ListItemText primary="Groups" />
+        <ListItemText primary="Clock In" />
       </ListItemButton>
     </ListItem>
+
     <ListItem disablePadding>
-      <ListItemButton >
+      <ListItemButton onClick={()=> props.handleLogOut()}>
         <ListItemIcon>
-          <Storefront/>
+          <Logout />
         </ListItemIcon>
-        <ListItemText primary="Marketplace" />
-      </ListItemButton>
-    </ListItem>
-    <ListItem disablePadding>
-      <ListItemButton >
-        <ListItemIcon>
-          <AccountBox/>
-        </ListItemIcon>
-        <ListItemText primary="Profile" />
-      </ListItemButton>
-    </ListItem>
-    <ListItem disablePadding>
-      <ListItemButton >
-        <ListItemIcon>
-          <Settings />
-        </ListItemIcon>
-        <ListItemText primary="Settings" />
+        <ListItemText primary="Logout" />
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
