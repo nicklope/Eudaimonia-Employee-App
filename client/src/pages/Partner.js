@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import RandomQuestion from '../components/RandomQuestion'
 const Partner = (props) => {
   const { id } = useParams()
@@ -40,6 +40,8 @@ const Partner = (props) => {
   })
   const [finalBinary, setFinalBinary] = useState('')
   const [refresh, setRefresh] = useState(false)
+
+  const navigate = useNavigate()
   const getUserData = async () => {
     setRefresh(true)
     let res = await axios.get(`http://localhost:3001/eea/user/${id}`)
@@ -231,6 +233,7 @@ const Partner = (props) => {
               </IconButton>
             </Stack>
             <Typography
+              onClick={() => navigate('/clockin')}
               sx={{
                 '&:hover': {
                   cursor: 'pointer',
@@ -246,7 +249,7 @@ const Partner = (props) => {
               <Button
                 sx={{ width: '100%' }}
                 onClick={generateToken}
-                disabled={finalBinary === binary ? false : true}
+                disabled={finalBinary === binary && !token ? false : true}
               >
                 Generate Clock In/Out Token
               </Button>
