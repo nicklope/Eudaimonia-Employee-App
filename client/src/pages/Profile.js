@@ -29,7 +29,8 @@ import {
   Visibility,
   VisibilityOff,
   VisibilityOffOutlined,
-  VisibilityOutlined
+  VisibilityOutlined,
+  VisibilityTwoTone
 } from '@mui/icons-material'
 import Post from '../components/Post'
 import RightBar from '../components/RightBar'
@@ -254,12 +255,9 @@ const Profile = (props) => {
                 }}
               />
               <Chip
+                color={userData[0].clockedIn ? 'success' : 'default'}
                 icon={
-                  userData[0].clockedIn ? (
-                    <Visibility />
-                  ) : (
-                    <VisibilityOff color="inherit" />
-                  )
+                  userData[0].clockedIn ? <Visibility /> : <VisibilityOff />
                 }
                 label={userData[0].clockedIn ? 'Clocked In' : 'Clocked Out'}
                 sx={{
