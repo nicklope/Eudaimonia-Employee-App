@@ -23,7 +23,7 @@ const RightBar = () => {
           Clocked In
         </Typography>
 
-        <AvatarGroup max={7}>
+        <AvatarGroup max={8}>
           <Avatar/>
           <Avatar/>
           <Avatar/>
