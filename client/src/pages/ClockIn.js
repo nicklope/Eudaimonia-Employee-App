@@ -143,7 +143,7 @@ const ClockIn = (props) => {
               setKeyValue(keyValue.substring(0, keyValue.length - 1))
             }
           >
-            -
+            DELETE
           </Button>
           <Button
             sx={{ border: '3px solid black' }}
