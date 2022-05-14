@@ -98,11 +98,13 @@ const Partner = (props) => {
 
                 '&:hover': {
                   cursor: 'pointer',
-
+                  color: 'green',
                   transform: 'translateY(20px)'
                 }
               }}
-              onClick={() => generateRandomBinary(6)}
+              onClick={
+                finalBinary === binary ? null : () => generateRandomBinary(6)
+              }
             />
 
             <Typography variant="h3">{binary ? binary : ''}</Typography>
@@ -115,6 +117,7 @@ const Partner = (props) => {
             >
               <Switch
                 checked={switches.one}
+                disabled={finalBinary === binary ? true : false}
                 onChange={() =>
                   setSwitches(
                     switches.one
@@ -132,6 +135,7 @@ const Partner = (props) => {
               />
               <Switch
                 checked={switches.two}
+                disabled={finalBinary === binary ? true : false}
                 onChange={() =>
                   setSwitches(
                     switches.two
@@ -149,6 +153,7 @@ const Partner = (props) => {
               />
               <Switch
                 checked={switches.three}
+                disabled={finalBinary === binary ? true : false}
                 onChange={() =>
                   setSwitches(
                     switches.three
@@ -166,6 +171,7 @@ const Partner = (props) => {
               />
               <Switch
                 checked={switches.four}
+                disabled={finalBinary === binary ? true : false}
                 onChange={() =>
                   setSwitches(
                     switches.four
@@ -183,6 +189,7 @@ const Partner = (props) => {
               />
               <Switch
                 checked={switches.five}
+                disabled={finalBinary === binary ? true : false}
                 onChange={() =>
                   setSwitches(
                     switches.five
@@ -200,6 +207,7 @@ const Partner = (props) => {
               />
               <Switch
                 checked={switches.six}
+                disabled={finalBinary === binary ? true : false}
                 onChange={() =>
                   setSwitches(
                     switches.six
@@ -215,12 +223,24 @@ const Partner = (props) => {
                   )
                 }
               />
-              <IconButton onClick={generateUserBinary}>
+              <IconButton
+                onClick={generateUserBinary}
+                disabled={finalBinary === binary ? true : false}
+              >
                 <Lock />
               </IconButton>
             </Stack>
-            <Typography variant="h3">
-              {token ? 'Token: ' + token : ''}
+            <Typography
+              sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                  color: 'green',
+                  transform: 'translateY(-20px)'
+                }
+              }}
+              variant="h2"
+            >
+              {token ? token : ''}
             </Typography>
             <Stack sx={{ display: 'flex', direction: 'row', width: '10%' }}>
               <Button
@@ -228,7 +248,7 @@ const Partner = (props) => {
                 onClick={generateToken}
                 disabled={finalBinary === binary ? false : true}
               >
-                Generate Token
+                Generate Clock In/Out Token
               </Button>
             </Stack>
           </Box>
