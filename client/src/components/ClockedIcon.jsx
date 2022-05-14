@@ -4,7 +4,7 @@ import { Box } from "@mui/system"
 
 const ClockedIcon = () => {
 return (
-  <Box sx={{position: "sticky",  bottom: "30px", left: "75px", width: "20%"}}>
+  <Box sx={{position: "sticky",  bottom:{ sm :"30px"}, left:{sm :"90px", xl: "320px"}, width: "20%"}}>
     <Visibility sx={{fontSize: "50px", color: "green"}}/>
   </Box>
 )
