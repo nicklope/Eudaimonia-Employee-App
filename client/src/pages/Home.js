@@ -7,6 +7,7 @@ import { Box, Fab, Stack, Tooltip } from '@mui/material'
 import RightBar from '../components/RightBar'
 import { Add } from '@mui/icons-material'
 import Login from './Login'
+import ClockedIcon from '../components/ClockedIcon'
 
 const Home = (props) => {
   return props.user && props.authenticated ? (
@@ -33,6 +34,7 @@ const Home = (props) => {
         </Stack>
       </Box>
       <ChatBox />
+      <ClockedIcon />
     </div>
   ) : (
     <div>pls login</div>
