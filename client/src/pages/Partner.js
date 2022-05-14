@@ -1,9 +1,10 @@
 import { Box } from '@mui/system'
 import NavBar from '../components/NavBar'
-import { Handshake } from '@mui/icons-material'
+import { Handshake, Lock } from '@mui/icons-material'
 import {
   Button,
   Icon,
+  IconButton,
   LinearProgress,
   Stack,
   Switch,
@@ -40,6 +41,7 @@ const Partner = (props) => {
   const [finalBinary, setFinalBinary] = useState('')
   const [refresh, setRefresh] = useState(false)
   const getUserData = async () => {
+    setRefresh(true)
     let res = await axios.get(`http://localhost:3001/eea/user/${id}`)
 
     setUserData(res.data)
@@ -73,8 +75,7 @@ const Partner = (props) => {
     const timer = setInterval(() => {
       getUserData()
     }, 1000)
-    setRefresh(false)
-  }, [refresh])
+  }, [])
   if (!userData[0]) {
     return <LinearProgress></LinearProgress>
   } else
@@ -103,9 +104,7 @@ const Partner = (props) => {
               }}
               onClick={() => generateRandomBinary(6)}
             />
-            <Typography variant="h3">
-              {token ? 'Token: ' + token : ''}
-            </Typography>
+
             <Typography variant="h3">{binary ? binary : ''}</Typography>
             <Stack
               sx={{
@@ -216,9 +215,19 @@ const Partner = (props) => {
                   )
                 }
               />
+              <IconButton onClick={generateUserBinary}>
+                <Lock />
+              </IconButton>
             </Stack>
+            <Typography variant="h3">
+              {token ? 'Token: ' + token : ''}
+            </Typography>
             <Stack sx={{ display: 'flex', direction: 'row', width: '10%' }}>
-              <Button sx={{ width: '100%' }} onClick={generateToken}>
+              <Button
+                sx={{ width: '100%' }}
+                onClick={generateToken}
+                disabled={finalBinary === binary ? false : true}
+              >
                 Generate Token
               </Button>
             </Stack>
