@@ -26,6 +26,7 @@ import {
   EditOutlined,
   SelfImprovement,
   Update,
+  Visibility,
   VisibilityOff,
   VisibilityOffOutlined,
   VisibilityOutlined
@@ -253,8 +254,14 @@ const Profile = (props) => {
                 }}
               />
               <Chip
-                icon={<VisibilityOff />}
-                label="Clocked Out"
+                icon={
+                  userData[0].clockedIn ? (
+                    <Visibility />
+                  ) : (
+                    <VisibilityOff color="inherit" />
+                  )
+                }
+                label={userData[0].clockedIn ? 'Clocked In' : 'Clocked Out'}
                 sx={{
                   width: '20%',
                   position: 'relative',

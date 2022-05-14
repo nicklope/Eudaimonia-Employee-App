@@ -22,22 +22,27 @@ import NavBar from '../components/NavBar'
 const ClockIn = (props) => {
   const [keyValue, setKeyValue] = useState('')
   const [userData, setUserData] = useState(false)
+  const [refresh, setRefresh] = useState(false)
   const getUserData = async () => {
     let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
     console.log(res)
     setUserData(res.data)
   }
   const handleKeySubmit = async () => {
-    if ((userData[0].partnerToken[0].token = parseInt(keyValue))) {
+    if (userData[0].partnerToken[0].token === parseInt(keyValue)) {
+      console.log('clocked in!!')
       await axios.put(`http://localhost:3001/eea/clockin/${props.user.id}`)
+      setRefresh(true)
     }
   }
   const clockOut = async () => {
     await axios.put(`http://localhost:3001/eea/clockout/${props.user.id}`)
+    setRefresh(true)
   }
   useEffect(() => {
     getUserData()
-  }, [])
+    setRefresh(false)
+  }, [refresh])
   if (!userData[0]) {
     return <LinearProgress />
   } else

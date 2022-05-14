@@ -84,7 +84,7 @@ function App() {
           }
         />
         <Route
-          path="/partner"
+          path="/partner/:id"
           element={<Partner user={user} authenticated={authenticated} />}
         />
         <Route

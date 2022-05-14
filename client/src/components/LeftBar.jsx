@@ -32,7 +32,7 @@ const LeftBar = (props) => {
       </ListItemButton>
     </ListItem>
     <ListItem disablePadding>
-      <ListItemButton onClick={()=> navigate('/partner')} >
+      <ListItemButton onClick={()=> navigate(`/partner/${props.user.id}`)} >
         <ListItemIcon>
           <Handshake/>
         </ListItemIcon>
