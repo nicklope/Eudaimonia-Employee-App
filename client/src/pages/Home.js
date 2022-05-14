@@ -30,11 +30,11 @@ const Home = (props) => {
           <LeftBar user={props.user} handleLogOut={props.handleLogOut} />
           <PostFeed user={props.user} />
           <RightBar />
-          <ChatBox />
+          <ChatBox user={props.user} />
         </Stack>
       </Box>
-      <ChatBox />
-      <ClockedIcon />
+
+      <ClockedIcon user={props.user} />
     </div>
   ) : (
     <div>pls login</div>
