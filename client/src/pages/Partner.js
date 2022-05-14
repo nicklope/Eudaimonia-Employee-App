@@ -38,7 +38,7 @@ const Partner = (props) => {
     5: 0
   })
   const [finalBinary, setFinalBinary] = useState('')
-  const [checked, setChecked] = useState(false)
+  const [refresh, setRefresh] = useState(false)
   const getUserData = async () => {
     let res = await axios.get(`http://localhost:3001/eea/user/${id}`)
 
@@ -69,11 +69,12 @@ const Partner = (props) => {
 
   useEffect(() => {
     getUserData()
+    generateUserBinary()
     const timer = setInterval(() => {
       getUserData()
     }, 1000)
-    // setRefresh(false)
-  }, [])
+    setRefresh(false)
+  }, [refresh])
   if (!userData[0]) {
     return <LinearProgress></LinearProgress>
   } else
