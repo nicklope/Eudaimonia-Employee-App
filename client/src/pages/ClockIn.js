@@ -142,6 +142,7 @@ const ClockIn = (props) => {
             onClick={() =>
               setKeyValue(keyValue.substring(0, keyValue.length - 1))
             }
+            disabled={keyValue.length >= 1 ? false : true}
           >
             DELETE
           </Button>
