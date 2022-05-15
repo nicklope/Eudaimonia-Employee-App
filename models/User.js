@@ -16,6 +16,9 @@ const User = new Schema(
     enlightenment: { type: Number, required: true, default: 0 },
     clockedIn: { type: Boolean, default: false },
     partnerToken: [{ type: Schema.Types.ObjectId, ref: 'PartnerToken' }],
+    friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    sentFriendRequests: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    receivedFriendRequests: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     postsEnlightened: [
       {
         type: Schema.Types.ObjectId,

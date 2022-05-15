@@ -261,6 +261,49 @@ const clockOut = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+const sendFriendRequest = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { friendId } = req.params
+    const user = await User.findOne({ _id: id })
+    const friend = await User.findOne({ _id: friendId })
+    user.sentFriendRequests.push(friend._id)
+    friend.receivedFriendRequests.push(user._id)
+    user.save()
+    friend.save()
+    res.send(user)
+  } catch (error) {}
+}
+const declineFriendRequest = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { friendId } = req.params
+    const user = await User.findOne({ _id: id })
+    const friend = await User.findOne({ _id: friendId })
+    user.receivedFriendRequests = user.receivedFriendRequests.filter(
+      (request) => request != friend._id
+    )
+    friend.sentFriendRequests = friend.sentFriendRequests.filter(
+      (request) => request != user._id
+    )
+    user.save()
+    friend.save()
+    res.send(user)
+  } catch (error) {}
+}
+const addFriend = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { friendId } = req.params
+    const user = await User.findOne({ _id: id })
+    const friend = await User.findOne({ _id: friendId })
+    user.friends.push(friend._id)
+    friend.friends.push(user._id)
+    user.save()
+    friend.save()
+    res.send(user)
+  } catch (error) {}
+}
 module.exports = {
   createPost,
   getPosts,
@@ -277,5 +320,8 @@ module.exports = {
   updateUser,
   createToken,
   clockIn,
-  clockOut
+  clockOut,
+  addFriend,
+  sendFriendRequest,
+  declineFriendRequest
 }
