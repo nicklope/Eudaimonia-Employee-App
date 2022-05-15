@@ -19,6 +19,7 @@ const User = new Schema(
     friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     sentFriendRequests: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     receivedFriendRequests: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    notification: { type: Boolean, required: true, default: false },
     postsEnlightened: [
       {
         type: Schema.Types.ObjectId,

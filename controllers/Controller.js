@@ -281,10 +281,10 @@ const declineFriendRequest = async (req, res) => {
     const user = await User.findOne({ _id: id })
     const friend = await User.findOne({ _id: friendId })
     user.receivedFriendRequests = user.receivedFriendRequests.filter(
-      (request) => request != friend._id
+      (request) => request === friend._id
     )
     friend.sentFriendRequests = friend.sentFriendRequests.filter(
-      (request) => request != user._id
+      (request) => request === user._id
     )
     user.save()
     friend.save()

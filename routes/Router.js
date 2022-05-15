@@ -19,4 +19,5 @@ router.put('/clockin/:id', controller.clockIn)
 router.put('/clockout/:id', controller.clockOut)
 router.post('/request/send/:id/:friendId', controller.sendFriendRequest)
 router.put('/request/decline/:id/:friendId', controller.declineFriendRequest)
+router.post('/add/:id/:friendId', controller.addFriend)
 module.exports = router

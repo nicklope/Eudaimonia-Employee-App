@@ -4,6 +4,7 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  Checkbox,
   Chip,
   IconButton,
   LinearProgress,
@@ -23,7 +24,10 @@ import {
   Add,
   AudiotrackOutlined,
   Build,
+  CheckBox,
   EditOutlined,
+  PersonAdd,
+  PersonAddOutlined,
   SelfImprovement,
   Update,
   Visibility,
@@ -247,6 +251,7 @@ const Profile = (props) => {
                 }}
                 subheaderTypographyProps={{ color: 'black', fontSize: '18px' }}
               />
+
               <CardHeader
                 subheader={userData[0].location}
                 subheaderTypographyProps={{
@@ -254,6 +259,7 @@ const Profile = (props) => {
                   marginLeft: '30px'
                 }}
               />
+
               <Chip
                 color={userData[0].clockedIn ? 'success' : 'default'}
                 icon={
@@ -266,6 +272,39 @@ const Profile = (props) => {
                   left: '450px',
                   bottom: '75px',
                   marginBottom: '-30px'
+                }}
+              />
+
+              <Checkbox
+                icon={
+                  <PersonAddOutlined
+                    sx={{
+                      fontSize: '29px',
+                      color: 'white',
+                      backgroundColor: '#424242',
+                      borderRadius: '20px',
+                      padding: '6px'
+                    }}
+                  />
+                }
+                checkedIcon={
+                  <PersonAdd
+                    sx={{
+                      fontSize: '29px',
+                      color: 'white',
+                      backgroundColor: '#424242',
+                      borderRadius: '20px',
+                      padding: '6px'
+                    }}
+                  />
+                }
+                sx={{
+                  width: '7%',
+                  position: 'relative',
+                  left: '150px',
+                  bottom: '150px',
+                  marginBottom: '-30px',
+                  fontSize: '60px'
                 }}
               />
             </Card>
