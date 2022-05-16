@@ -126,7 +126,7 @@ const Post = (props) => {
 {    setChecked(false)}
   }
   const commentNavigate = (commenter) => {
-    navigate('/')
+    navigate('/home')
     navigate(`/user/${commenter}`)
     window.location.reload(false);
     setRefresh(true)
