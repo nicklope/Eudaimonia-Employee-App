@@ -48,10 +48,10 @@ const NavBar = (props) => {
   return(
     <AppBar position="sticky">
       <FlexToolbar>
-        <Box component='img' src={EudaiMoniaLogo} sx={{display:{xs:"none", sm:"block"}, height: "100px", zIndex: "100", '&:hover': {cursor: 'pointer', opacity: ".5",}}} onClick={()=> navigate('/')}/>
+        <Box component='img' src={EudaiMoniaLogo} sx={{display:{xs:"none", sm:"block"}, height: "100px", zIndex: "100", '&:hover': {cursor: 'pointer', opacity: ".5",}}} onClick={()=> navigate('/home')}/>
         
         <IconBox sx={{display:{xs:"block", sm:"none"}}}>
-          <IconButton color={homeColor} onMouseOver={()=> setHomeColor("primary")} onMouseLeave={() => setHomeColor("inherit")} onClick={() => navigate('/')}>
+          <IconButton color={homeColor} onMouseOver={()=> setHomeColor("primary")} onMouseLeave={() => setHomeColor("inherit")} onClick={() => navigate('/home')}>
           <EudaimoniaIcon />
           </IconButton>
         </IconBox>
