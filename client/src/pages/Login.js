@@ -49,10 +49,10 @@ const Login = (props) => {
       <Box
         sx={{
           display: 'flex',
+          flexDirections: 'column',
           m: 5,
           justifyContent: 'center',
-          alignItems: 'center',
-          height: '50vh'
+          alignItems: 'center'
         }}
       >
         <GroupWork sx={{ fontSize: '500px', width: '100%' }} />
@@ -61,7 +61,7 @@ const Login = (props) => {
           sx={{
             '& > :not(style)': {
               m: 1,
-              width: '25ch',
+              width: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center'
