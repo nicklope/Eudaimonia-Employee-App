@@ -1,5 +1,5 @@
-import { ExpandMore, Visibility, VisibilityOff } from "@mui/icons-material"
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Badge, Button, CircularProgress, IconButton, Modal, Typography } from "@mui/material"
+import { Check, Close, ExpandMore, Visibility, VisibilityOff } from "@mui/icons-material"
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Badge, Button, CircularProgress, IconButton, List, ListItem, Modal, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { useEffect, useState } from "react"
 import axios from "axios"
@@ -21,15 +21,23 @@ const ClockedIcon = (props) => {
     setUserData(res.data)
     console.log(res.data)
   }
+  const acceptFriendRequest = async (friendId) => {
+    let res = await axios.post(`http://localhost:3001/eea/add/${props.user.id}/${friendId}`)
+    console.log(res)
+  }
+  const declineFriendRequest = async (friendId) => {
+    let res = await axios.post(`http://localhost:3001/eea/request/decline/${props.user.id}/${friendId}`)
+    console.log(res)
+  }
   const openModal = () => {
     setModalOpen(true)
-    getNotificationData()
+    
   }
-  const handleModalOpen = () => setModalOpen(true)
+  
   const handleModalClose = () => setModalOpen(false);
   useEffect(() => {
-    getUserData()
-
+    
+    getNotificationData()
     setRefresh(false)
   }, [])
   if (!userData[0]) {
@@ -38,7 +46,7 @@ const ClockedIcon = (props) => {
   else  if (userData[0].clockedIn){ 
     return (
       <Box sx={{position: "sticky",  bottom:{xs: "0", sm :"30px"}, left:{xs: "10px", sm :"90px", xl: "320px"},  width: "20%"}}>
-        <Badge badgeContent={userData[0].notification ? "!" : 0} color="error" >
+        <Badge badgeContent={userData[0].receivedFriendRequests ? "!" : 0} color="error" >
         <Visibility sx={{fontSize: "50px", color: "green", '&:hover': {cursor: "pointer"}}} onClick={()=> openModal()}/>
         </Badge>
         <Modal           
@@ -55,7 +63,7 @@ const ClockedIcon = (props) => {
           bgcolor: 'white',
           
           boxShadow: 24,}}>
-            {userData[0].receivedFriendRequests[0].userName}
+            {userData[0].receivedFriendRequests[0].userName} Wants to be your friend!
           </Box>
         </Modal>
       </Box>
@@ -64,7 +72,7 @@ const ClockedIcon = (props) => {
   else  if (!userData[0].clockedIn)
     return (
       <Box sx={{position: "sticky",  bottom:{xs: "0", sm :"30px"}, left:{xs: "10px", sm :"90px", xl: "320px"},  width: "20%"}} >
-        <Badge badgeContent={userData[0].notification ? "!" : 0} color="error">
+        <Badge badgeContent={userData[0].receivedFriendRequests ? "!" : 0} color="error">
         <VisibilityOff sx={{fontSize: "50px", color: "grey", '&:hover': {cursor: "pointer"}}}  onClick={()=> openModal()} />
         </Badge>
         <Modal          
@@ -72,16 +80,26 @@ const ClockedIcon = (props) => {
           onClose={() => handleModalClose()}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description">
+         
           <Box sx={{  
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 400,
+            width: 500,
             bgcolor: 'white',
             
             boxShadow: 24,}}>
-              {userData[0].receivedFriendRequests[0].userName}
+              {userData[0].receivedFriendRequests.map((user)=>(
+              <List >
+                <ListItem 
+                  sx={{display: "flex", justifyContent:"space-between"}}>
+                    <Avatar src={user.avatar} sx={{margin: "15px"}}/>{user.userName} wants to be friends! 
+                    <Check onClick={() => acceptFriendRequest(user._id)}/> 
+                    <Close onClick={() => declineFriendRequest(user._id)}/>
+                </ListItem>
+              </List>
+              ))}
             </Box>
         </Modal>
       </Box>

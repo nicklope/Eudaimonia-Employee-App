@@ -319,6 +319,12 @@ const addFriend = async (req, res) => {
     const friend = await User.findOne({ _id: friendId })
     user.friends.push(friend._id)
     friend.friends.push(user._id)
+    user.receivedFriendRequests = user.receivedFriendRequests.filter(
+      (request) => request === friend._id
+    )
+    friend.sentFriendRequests = friend.sentFriendRequests.filter(
+      (request) => request === user._id
+    )
     user.save()
     friend.save()
     res.send(user)
