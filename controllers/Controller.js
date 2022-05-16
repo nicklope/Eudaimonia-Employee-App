@@ -330,7 +330,7 @@ const addFriend = async (req, res) => {
     res.send(user)
   } catch (error) {}
 }
-const getClockedInUsers = async () => {
+const getClockedInUsers = async (req, res) => {
   try {
     const user = await User.find({ clockedIn: true })
     res.send(user)
