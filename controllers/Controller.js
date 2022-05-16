@@ -335,8 +335,6 @@ const getClockedInUsers = async (req, res) => {
     const user = await User.find({ clockedIn: true })
     res.send(user)
   } catch (error) {}
-
-  res.send(user)
 }
 module.exports = {
   createPost,

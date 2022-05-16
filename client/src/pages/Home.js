@@ -29,7 +29,7 @@ const Home = (props) => {
         >
           <LeftBar user={props.user} handleLogOut={props.handleLogOut} />
           <PostFeed user={props.user} />
-          <RightBar />
+          <RightBar user={props.user} />
           <ChatBox user={props.user} />
         </Stack>
       </Box>

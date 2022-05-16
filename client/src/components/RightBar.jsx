@@ -5,6 +5,7 @@ import {
   Divider,
   ImageList,
   ImageListItem,
+  LinearProgress,
   List,
   ListItem,
   ListItemAvatar,
@@ -12,8 +13,41 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import {useState, useEffect} from 'react'
+import axios from "axios";
 
-const RightBar = () => {
+const RightBar = (props) => {
+  const [clockedIn, setClockedIn] = useState(false)
+  const [userData, setUserData] = useState(false)
+  const getUserData = async () => {
+    let res = await axios.get(`http://localhost:3001/eea/user/${props.user.id}`)
+    
+    setUserData(res.data)
+  }
+  const getClockedInData = async () => {
+    let res = await axios.get(`http://localhost:3001/eea/clockedin`)
+   
+    setClockedIn(res.data)
+  }
+  useEffect(() => {
+  
+    getUserData()
+    getClockedInData()
+  
+    const timer = setInterval(() => {
+      getUserData()
+      getClockedInData()
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  if (!userData || !clockedIn) {
+    return (
+      <div>
+        <LinearProgress />
+      </div>
+    )
+  } else
   return (
     <Box flex={2} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
 
@@ -22,18 +56,13 @@ const RightBar = () => {
         <Typography variant="h6" fontWeight={100}>
           Clocked In
         </Typography>
-
-        <AvatarGroup max={8}>
-          <Avatar/>
-          <Avatar/>
-          <Avatar/>
-          <Avatar/>
-          <Avatar/>
-          <Avatar/>
-          <Avatar/>
-          <Avatar/>
-          <Avatar/>
+    
+        <AvatarGroup max={8} >
+        {clockedIn.map((user) => (
+         <Avatar src={user.avatar}/>
+         ))}
         </AvatarGroup>
+        
 
         <Typography variant="h6" fontWeight={100} mt={2}>
           Latest Conversations
