@@ -251,7 +251,7 @@ const Post = (props) => {
           <Typography variant="body4" color="text.secondary" sx={{fontSize: "22px"}}>
             {props.posts.content}
           </Typography>
-          <CardMedia component={props.posts.image ? "img" : "div"} src={props.posts.image} sx={{marginTop: "15px"}}/>
+          <CardMedia component={props.posts.image ? "img" : "div"} src={props.posts.image} sx={{marginTop: "15px", maxHeight: "300px"}}/>
         </CardContent>
         
         <CardActions disableSpacing sx={{display: "flex", justifyContent: "right"}} >
