@@ -20,4 +20,5 @@ router.put('/clockout/:id', controller.clockOut)
 router.post('/request/send/:id/:friendId', controller.sendFriendRequest)
 router.put('/request/decline/:id/:friendId', controller.declineFriendRequest)
 router.post('/add/:id/:friendId', controller.addFriend)
+router.get('/notifications/:userId', controller.getFriendRequestData)
 module.exports = router

@@ -100,6 +100,17 @@ const getUserData = async (req, res) => {
   try {
     const { userId } = req.params
     const user = await User.find({ _id: userId }).populate('partnerToken')
+
+    res.send(user)
+  } catch (error) {}
+}
+const getFriendRequestData = async (req, res) => {
+  try {
+    const { userId } = req.params
+    const user = await User.find({ _id: userId }).populate(
+      'receivedFriendRequests'
+    )
+
     res.send(user)
   } catch (error) {}
 }
@@ -267,11 +278,19 @@ const sendFriendRequest = async (req, res) => {
     const { friendId } = req.params
     const user = await User.findOne({ _id: id })
     const friend = await User.findOne({ _id: friendId })
-    user.sentFriendRequests.push(friend._id)
-    friend.receivedFriendRequests.push(user._id)
+    const notify = await User.updateOne(
+      { _id: friendId },
+      {
+        $set: {
+          notification: true
+        }
+      }
+    )
+    user.sentFriendRequests.push(friendId)
+    friend.receivedFriendRequests.push(id)
     user.save()
     friend.save()
-    res.send(user)
+    res.send(notify)
   } catch (error) {}
 }
 const declineFriendRequest = async (req, res) => {
@@ -291,6 +310,7 @@ const declineFriendRequest = async (req, res) => {
     res.send(user)
   } catch (error) {}
 }
+
 const addFriend = async (req, res) => {
   try {
     const { id } = req.params
@@ -323,5 +343,6 @@ module.exports = {
   clockOut,
   addFriend,
   sendFriendRequest,
-  declineFriendRequest
+  declineFriendRequest,
+  getFriendRequestData
 }
