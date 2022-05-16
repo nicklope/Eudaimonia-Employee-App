@@ -46,7 +46,7 @@ const ClockedIcon = (props) => {
   else  if (userData[0].clockedIn){ 
     return (
       <Box sx={{position: "sticky",  bottom:{xs: "0", sm :"30px"}, left:{xs: "10px", sm :"90px", xl: "320px"},  width: "20%"}}>
-        <Badge badgeContent={userData[0].receivedFriendRequests ? "!" : 0} color="error" >
+        <Badge badgeContent={userData[0].notification ? "!" : 0} color="error" >
         <Visibility sx={{fontSize: "50px", color: "green", '&:hover': {cursor: "pointer"}}} onClick={()=> openModal()}/>
         </Badge>
         <Modal           
@@ -63,7 +63,18 @@ const ClockedIcon = (props) => {
           bgcolor: 'white',
           
           boxShadow: 24,}}>
-            {userData[0].receivedFriendRequests[0].userName} Wants to be your friend!
+            <h1>Friend Requests</h1>
+              {userData[0].receivedFriendRequests.map((user)=>(
+              <List >
+                
+                <ListItem 
+                  sx={{display: "flex", justifyContent:"space-between"}}>
+                    <Avatar src={user.avatar} sx={{margin: "15px"}}/>{user.userName} wants to be friends! 
+                    <IconButton><Check onClick={() => acceptFriendRequest(user._id)}/> </IconButton>
+                    <IconButton><Close onClick={() => declineFriendRequest(user._id)}/></IconButton>
+                </ListItem>
+              </List>
+              ))}
           </Box>
         </Modal>
       </Box>
@@ -72,7 +83,7 @@ const ClockedIcon = (props) => {
   else  if (!userData[0].clockedIn)
     return (
       <Box sx={{position: "sticky",  bottom:{xs: "0", sm :"30px"}, left:{xs: "10px", sm :"90px", xl: "320px"},  width: "20%"}} >
-        <Badge badgeContent={userData[0].receivedFriendRequests ? "!" : 0} color="error">
+        <Badge badgeContent={userData[0].notification ? "!" : 0} color="error">
         <VisibilityOff sx={{fontSize: "50px", color: "grey", '&:hover': {cursor: "pointer"}}}  onClick={()=> openModal()} />
         </Badge>
         <Modal          
