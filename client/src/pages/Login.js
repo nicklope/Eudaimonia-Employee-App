@@ -1,4 +1,4 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { GroupWork, Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -55,6 +55,7 @@ const Login = (props) => {
           height: '50vh'
         }}
       >
+        <GroupWork sx={{ fontSize: '500px', width: '100%' }} />
         <Box
           component="form"
           sx={{
