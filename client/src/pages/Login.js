@@ -42,7 +42,7 @@ const Login = (props) => {
     setValues({ email: '', password: '' })
     props.setUser(payload)
     props.toggleAuthenticated(true)
-    navigate('/')
+    navigate('/home')
   }
   return (
     <Box>
