@@ -7,6 +7,7 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Stack,
   TextField
 } from '@mui/material'
 import { useState } from 'react'
@@ -45,66 +46,60 @@ const Login = (props) => {
     navigate('/home')
   }
   return (
-    <Box>
+    <Stack
+      sx={{
+        width: '80vw',
+        display: 'flex',
+        flexDirections: 'column',
+        alignItems: 'center'
+      }}
+    >
+      <GroupWork sx={{ fontSize: '500px', width: '100%' }} />
       <Box
+        component="form"
         sx={{
-          display: 'flex',
-          flexDirections: 'column',
-          alignItems: 'center'
+          width: '100%'
         }}
+        noValidate
+        autoComplete="off"
       >
-        <GroupWork sx={{ fontSize: '500px', width: '100%' }} />
-        <Box
-          component="form"
-          sx={{
-            m: 1,
-            width: '100%'
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="outlined-basic"
-            label="UserName"
-            variant="outlined"
-            value={values.userName}
-            onChange={handleChange('userName')}
-          />
+        <TextField
+          id="outlined-basic"
+          label="UserName"
+          variant="outlined"
+          value={values.userName}
+          onChange={handleChange('userName')}
+        />
 
-          <FormControl
-            sx={{ m: 1, width: '25ch' }}
-            variant="outlined"
-            autoComplete="off"
-          >
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={values.showPassword ? 'text' : 'password'}
-              value={values.password}
-              onChange={handleChange('password')}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-            <Button variant="outlined" onClick={handleSubmit}>
-              Submit
-            </Button>
-          </FormControl>
-        </Box>
+        <FormControl variant="outlined" autoComplete="off">
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={values.showPassword ? 'text' : 'password'}
+            value={values.password}
+            onChange={handleChange('password')}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+          <Button variant="outlined" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </FormControl>
       </Box>
-    </Box>
+    </Stack>
   )
 }
 export default Login
