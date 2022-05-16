@@ -94,10 +94,22 @@ const Login = (props) => {
             label="Password"
           />
 
-          <Button variant="outlined" onClick={handleSubmit}>
+          <Button
+            variant="outlined"
+            onClick={handleSubmit}
+            sx={{ margin: '5px' }}
+          >
             Submit
           </Button>
         </FormControl>
+
+        <Button
+          variant="outlined"
+          onClick={() => navigate('/')}
+          sx={{ margin: '5px' }}
+        >
+          Sign up
+        </Button>
       </Box>
     </Stack>
   )
