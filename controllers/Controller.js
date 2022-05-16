@@ -330,6 +330,14 @@ const addFriend = async (req, res) => {
     res.send(user)
   } catch (error) {}
 }
+const getClockedInUsers = async () => {
+  try {
+    const user = await User.find({ clockedIn: true })
+    res.send(user)
+  } catch (error) {}
+
+  res.send(user)
+}
 module.exports = {
   createPost,
   getPosts,
@@ -350,5 +358,6 @@ module.exports = {
   addFriend,
   sendFriendRequest,
   declineFriendRequest,
-  getFriendRequestData
+  getFriendRequestData,
+  getClockedInUsers
 }
