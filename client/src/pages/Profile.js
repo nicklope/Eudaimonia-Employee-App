@@ -358,7 +358,10 @@ const Profile = (props) => {
         </Stack>
       </Box>
     )
-  } else if (userData[0].friends.includes(id) || id === props.user.id) {
+  } else if (
+    userData[0].friends.includes(props.user.id) ||
+    id === props.user.id
+  ) {
     return (
       <Box display="flex" flexDirection="column" id="profile">
         <NavBar handleLogOut={props.handleLogOut} user={props.user} />
