@@ -290,7 +290,12 @@ const Profile = (props) => {
                 <Checkbox
                   onClick={() => sendFriendRequest()}
                   checked={
-                    userData[0].receivedFriendRequests.includes(id)
+                    userData[0].receivedFriendRequests.includes(props.user.id)
+                      ? true
+                      : false
+                  }
+                  disabled={
+                    userData[0].receivedFriendRequests.includes(props.user.id)
                       ? true
                       : false
                   }
