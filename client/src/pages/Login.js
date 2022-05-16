@@ -48,20 +48,17 @@ const Login = (props) => {
   return (
     <Stack
       sx={{
-        width: '80vw',
         display: 'flex',
         flexDirections: 'column',
         alignItems: 'center'
       }}
     >
-      <GroupWork sx={{ fontSize: '500px', width: '100%' }} />
+      <GroupWork sx={{ fontSize: '500px', width: '100%', margin: '10px' }} />
       <Box
         component="form"
-        sx={{
-          width: '100%'
-        }}
         noValidate
         autoComplete="off"
+        sx={{ display: 'flex', flexDirection: 'column', margin: '5px' }}
       >
         <TextField
           id="outlined-basic"
@@ -69,6 +66,7 @@ const Login = (props) => {
           variant="outlined"
           value={values.userName}
           onChange={handleChange('userName')}
+          sx={{ margin: '5px' }}
         />
 
         <FormControl variant="outlined" autoComplete="off">
@@ -79,6 +77,7 @@ const Login = (props) => {
             id="outlined-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
+            sx={{ margin: '5px' }}
             onChange={handleChange('password')}
             endAdornment={
               <InputAdornment position="end">
@@ -94,6 +93,7 @@ const Login = (props) => {
             }
             label="Password"
           />
+
           <Button variant="outlined" onClick={handleSubmit}>
             Submit
           </Button>
