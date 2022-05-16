@@ -50,8 +50,6 @@ const Login = (props) => {
         sx={{
           display: 'flex',
           flexDirections: 'column',
-          m: 5,
-          justifyContent: 'center',
           alignItems: 'center'
         }}
       >
@@ -59,13 +57,8 @@ const Login = (props) => {
         <Box
           component="form"
           sx={{
-            '& > :not(style)': {
-              m: 1,
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }
+            m: 1,
+            width: '100%'
           }}
           noValidate
           autoComplete="off"
